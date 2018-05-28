@@ -5,12 +5,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import {HomePage} from '../pages/home/home'
 import { AuthService } from '../services/auth.service';
+
+import { TabsPage } from '../pages/tabs/tabs';
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   //rootPage:string = 'HomePage';
-  rootPage;
+  rootPage:any  = TabsPage;
 	private platform;
   constructor(platform: Platform,private statusBar: StatusBar,private splashScreen: SplashScreen,
     private auth: AuthService) {
@@ -35,7 +38,7 @@ export class MyApp {
       .subscribe(
         user => {
           if (user) {
-            this.rootPage = HomePage;
+            this.rootPage = TabsPage;
           } else {
             this.rootPage = LoginPage;
           }
