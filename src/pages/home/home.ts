@@ -31,7 +31,7 @@ export class HomePage {
     var officeLocation = new google.maps.LatLng(12.9235184,77.5993086)      ;
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
-      zoom: 5,
+      zoom: 18,
       center: officeLocation      
     });
     var marker = new google.maps.Marker({position:officeLocation});
