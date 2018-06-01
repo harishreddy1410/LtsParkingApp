@@ -1,16 +1,18 @@
 <ion-header>
   <ion-navbar>
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
+    
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
         </button>
-    <ion-title>
-      About
-    </ion-title>
+    
+      <ion-title>
+       <div class="title">About</div>
+      </ion-title>
   </ion-navbar>
 </ion-header>
 
 <!--Code for MenuToggle starts-->
-<ion-menu [content]="content" id="menu1">
+<ion-menu [content]="content" id="menu1" *ngIf="isValid">
     <ion-header>
         <ion-toolbar color="secondary">
           <ion-title>Menu</ion-title>
