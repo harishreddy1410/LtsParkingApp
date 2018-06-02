@@ -65,3 +65,16 @@ page-home {
       background-color: #00cc00;
     }
   }
+  .custom-spinner-container{
+    .custom-spinner-box{
+      background-image: url(../../assets/imgs/ajaxloader.gif);
+      width: 40px;
+      height: 40px;
+      display: block;
+      background-repeat: no-repeat;
+      margin:0px auto;
+    }
+  }
+  .alert-message{
+    overflow: auto;
+  }

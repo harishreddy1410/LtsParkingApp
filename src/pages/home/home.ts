@@ -2,6 +2,10 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import {LoadingController} from 'ionic-angular'
+import {Geolocation} from '@ionic-native/geolocation';
+
+import {GlobalGenericService} from '../../services/globalgeneric.service';
 
 //declare var google;
 
@@ -75,14 +79,14 @@ export class HomePage {
         "IsActive":true
       }
     ];
-
-  constructor(public navCtrl: NavController,public alerCtrl: AlertController) {
-   
+    constructor(public navCtrl: NavController,public alertCtrl: AlertController, 
+    public geolocation: Geolocation, public genericService : GlobalGenericService,
+  public loadingCtrl : LoadingController) {
   }
 
-  ionViewDidLoad(){
+  //ionViewDidLoad(){
     //this.initMap();
-  }
+  //}
 
   // initMap() {
 
@@ -116,26 +120,55 @@ export class HomePage {
   // }
 
   selectSlotToOccupy(event) {
-    let confirm = this.alerCtrl.create({
+    let loader = this.loadingCtrl.create({
+      spinner: 'hide',
+    content: `
+      <div class="custom-spinner-container">
+        <div class="custom-spinner-box"></div>
+        <div class="custom-spinner-text">Please wait...</div>
+      </div>`,
+    });
+    loader.present();
+    let userLatitude;
+      let userLongitude; 
+    let confirm = this.alertCtrl.create({
       title: 'Confirmation',
       message: 'Do you want to occupy this slot?',
       buttons: [
         {
           text: 'No',
           handler: () => {
-            console.log('Slot Id'+event.target.attributes["data-slot-id"].value);
+            console.log('Slot Id:'+event.target.attributes["data-slot-id"].value);
           }
         },
         {
           text: 'Yes',
           handler: () => {
-            console.log('Agree clicked');
+            console.log('Slot Id:'+event.target.attributes["data-slot-id"].value);
           }
         }
       ]
     });
-    if(event.target.className.indexOf("slotOccupied") < 0){
-      confirm.present();
-    }    
+    let alert = this.alertCtrl.create({
+      title: 'Warning',
+      message: 'Oops! Your distance from parking space is beyond the limit.',
+      buttons: ['Close']
+    });
+    this.geolocation.getCurrentPosition().then((position) => { 
+      userLatitude = position.coords.latitude;
+      userLongitude = position.coords.longitude; 
+      let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);
+      if(event.target.className.indexOf("slotOccupied") < 0 && distance < 0.1){
+        loader.dismiss();
+        confirm.present();
+      }
+      else{
+        loader.dismiss();
+        alert.present();
+
+      }
+      
+    });
+        
   }
 }
