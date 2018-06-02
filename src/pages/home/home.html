@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <ion-header>
   <ion-navbar>
     <ion-title>
@@ -9,5 +10,14 @@
 </ion-header>
 
 <ion-content padding>
-    <div #map id="map"></div> 
+    <div class="parkingSlotLeftArea">
+        <div class="parkingArea" *ngFor="let parkingSlot of parkingSlots" [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':''" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
+          {{parkingSlot.Name}}            
+        </div>
+    </div>
+    <div class="parkingSlotRightArea">
+        <div class="parkingArea" *ngFor="let parkingSlot of parkingSlots" [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':''" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
+            {{parkingSlot.Name}}            
+          </div>
+    </div>
 </ion-content>
