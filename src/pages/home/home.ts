@@ -103,7 +103,7 @@ private apiProvider:ApiProvider) {
           console.log(parkingSlotRes);
         }
     );
-    //Sample : Parking slot update call
+  //Sample : Parking slot update call
     var updateParkingSlotVm = new ParkingSlotViewModel();
     updateParkingSlotVm.Id = 10;
     updateParkingSlotVm.IsOccupied = true;
@@ -125,7 +125,15 @@ private apiProvider:ApiProvider) {
     this.apiProvider.CreateParkingSlot(createParkingSlotVm).subscribe(resp=>{
       console.log("Parking slot creation successfull");
       console.log(resp);
-    })
+    });
+    
+    //Sample : Parking slot delete call
+    this.apiProvider.DeleteParkingSlot(12).subscribe(
+      resp =>{
+        console.log("Parking slot delete successfull");
+        console.log(resp);
+      }
+    );
 
     }
 
