@@ -4,8 +4,9 @@ import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import {LoadingController} from 'ionic-angular'
 import {Geolocation} from '@ionic-native/geolocation';
-
+import { ApiProvider } from './../../providers/api/api';
 import {GlobalGenericService} from '../../services/globalgeneric.service';
+import { ParkingSlotViewModel } from '../../dto/ParkingSlotViewModel';
 
 //declare var google;
 
@@ -20,69 +21,113 @@ export class HomePage {
   //map: any;
   // directionsService = new google.maps.DirectionsService;
   // directionsDisplay = new google.maps.DirectionsRenderer;
-
-  parkingSlots =[
-        {
-        "Id":1,
-        "Name": "1",
-        "IsOccupied": true,
-        "SequenceOrder":1,
-        "IsActive":true
-      },
-      {
-        "Id":2,
-        "Name": "2",
-        "IsOccupied": false,
-        "SequenceOrder":2,
-        "IsActive":true
-      },
-      {
-        "Id":3,
-        "Name": "3",
-        "IsOccupied": false,
-        "SequenceOrder":3,
-        "IsActive":true
-      },
-      {
-        "Id":4,
-        "Name": "4",
-        "IsOccupied": false,
-        "SequenceOrder":4,
-        "IsActive":true
-      },
-      {
-        "Id":5,
-        "Name": "5",
-        "IsOccupied": false,
-        "SequenceOrder":5,
-        "IsActive":true
-      },
-      {
-        "Id":6,
-        "Name": "6",
-        "IsOccupied": false,
-        "SequenceOrder":6,
-        "IsActive":true
-      },
-      {
-        "Id":7,
-        "Name": "7",
-        "IsOccupied": false,
-        "SequenceOrder":7,
-        "IsActive":true
-      },
-      {
-        "Id":8,
-        "Name": "8",
-        "IsOccupied": false,
-        "SequenceOrder":8,
-        "IsActive":true
-      }
-    ];
+  parkingSlots:any;
+  // parkingSlots =[
+  //       {
+  //       "Id":1,
+  //       "Name": "1",
+  //       "IsOccupied": true,
+  //       "SequenceOrder":1,
+  //       "IsActive":true
+  //     },
+  //     {
+  //       "Id":2,
+  //       "Name": "2",
+  //       "IsOccupied": false,
+  //       "SequenceOrder":2,
+  //       "IsActive":true
+  //     },
+  //     {
+  //       "Id":3,
+  //       "Name": "3",
+  //       "IsOccupied": false,
+  //       "SequenceOrder":3,
+  //       "IsActive":true
+  //     },
+  //     {
+  //       "Id":4,
+  //       "Name": "4",
+  //       "IsOccupied": false,
+  //       "SequenceOrder":4,
+  //       "IsActive":true
+  //     },
+  //     {
+  //       "Id":5,
+  //       "Name": "5",
+  //       "IsOccupied": false,
+  //       "SequenceOrder":5,
+  //       "IsActive":true
+  //     },
+  //     {
+  //       "Id":6,
+  //       "Name": "6",
+  //       "IsOccupied": false,
+  //       "SequenceOrder":6,
+  //       "IsActive":true
+  //     },
+  //     {
+  //       "Id":7,
+  //       "Name": "7",
+  //       "IsOccupied": false,
+  //       "SequenceOrder":7,
+  //       "IsActive":true
+  //     },
+  //     {
+  //       "Id":8,
+  //       "Name": "8",
+  //       "IsOccupied": false,
+  //       "SequenceOrder":8,
+  //       "IsActive":true
+  //     }
+  //   ];
     constructor(public navCtrl: NavController,public alertCtrl: AlertController, 
     public geolocation: Geolocation, public genericService : GlobalGenericService,
-  public loadingCtrl : LoadingController) {
-  }
+  public loadingCtrl : LoadingController,
+private apiProvider:ApiProvider) {
+
+  //Sample : Parking slot get call
+    this.apiProvider.GetAllParkingSlots().subscribe(
+      allParkingSlots => {
+        console.log("Resp 1");
+        this.parkingSlots = allParkingSlots;
+      },
+      err => {
+        console.log("eror " + err);
+      },
+      () => { console.log("Pulling slots pull successful");}
+    );
+//Sample : Parking slot get call
+    this.apiProvider.GetParkingSlot(5).subscribe(
+        parkingSlotRes =>{
+          console.log("Parking slot pull successful")
+          console.log(parkingSlotRes);
+        }
+    );
+    //Sample : Parking slot update call
+    var updateParkingSlotVm = new ParkingSlotViewModel();
+    updateParkingSlotVm.Id = 10;
+    updateParkingSlotVm.IsOccupied = true;
+    
+    this.apiProvider.UpdateParkingSlot(updateParkingSlotVm)
+    .subscribe(data => {
+      console.log("update successful");
+      console.log(data);
+    });
+
+    var createParkingSlotVm = new ParkingSlotViewModel();
+    createParkingSlotVm.Id = 11;
+    createParkingSlotVm.IsOccupied = false;
+    createParkingSlotVm.Level = 0;
+    createParkingSlotVm.Location = "BLR";
+    createParkingSlotVm.SequenceOrder = 6;
+    createParkingSlotVm.UserId = 8;
+    console.log("creating parking slot");
+    this.apiProvider.CreateParkingSlot(createParkingSlotVm).subscribe(resp=>{
+      console.log("Parking slot creation successfull");
+      console.log(resp);
+    })
+
+    }
 
   //ionViewDidLoad(){
     //this.initMap();
