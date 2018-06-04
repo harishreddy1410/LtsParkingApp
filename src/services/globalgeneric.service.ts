@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class GlobalService{
-    public isAdmin:boolean = false;
+export class GlobalGenericService{
+    public isAdmin:boolean = true;
 }

@@ -13,7 +13,7 @@ import { firebaseConfig } from '../custom_config/config'
 import { LoginPage } from '../pages/login/login';
 import { SignupPage} from '../pages/signup/signup';
 import { AuthService } from '../services/auth.service';
-import { SingletonService } from '../services/singleton.service';
+import { GlobalGenericService } from '../services/globalgeneric.service';
 import { NgxErrorsModule} from '@ultimate/ngxerrors';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -52,7 +52,7 @@ import { ContactPage } from '../pages/contact/contact';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AngularFireAuth,
     AuthService,
-    SingletonService
+    GlobalGenericService
   ]
 })
 export class AppModule {}
