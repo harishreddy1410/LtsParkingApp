@@ -14,7 +14,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 export class MyApp {
   //rootPage:string = 'HomePage';
   rootPage:any  = TabsPage;
-	private platform;
+  private platform;
+  isValid=false;
   constructor(platform: Platform,private statusBar: StatusBar,private splashScreen: SplashScreen,
     private auth: AuthService) {
     // platform.ready().then(() => {
@@ -25,6 +26,7 @@ export class MyApp {
     // });
     this.platform = platform;
     this.initializeApp();
+    
   }
 
   initializeApp() {
