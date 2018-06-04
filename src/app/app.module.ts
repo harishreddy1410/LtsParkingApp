@@ -20,6 +20,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 
+import {Geolocation} from '@ionic-native/geolocation';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -49,10 +51,16 @@ import { ContactPage } from '../pages/contact/contact';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     AngularFireAuth,
     AuthService,
+<<<<<<< HEAD
     GlobalGenericService
+=======
+    GlobalGenericService,
+    Geolocation,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    
+>>>>>>> 6891ce978f7dddb5645ce9c4e401e374e5f8424e
   ]
 })
 export class AppModule {}

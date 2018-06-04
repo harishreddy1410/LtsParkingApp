@@ -19,3 +19,62 @@ page-home {
   .ltsLogoArea{
     text-align: center;
   }
+
+  .parkingSlotLeftArea{
+    width:40%;
+    display: inline-block;
+    .parkingArea{
+      height: 25px;
+      width: 100%;
+      border: 1px solid #000000;
+      margin: 3px 0px;
+      text-align: center;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .slotOccupied{
+      background-color: #ff1a1a;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .slotSelected{
+      background-color: #00cc00;
+    }
+  }
+
+  .parkingSlotRightArea{
+    width: 40%;
+    float: right;
+    .parkingArea{
+      height: 25px;
+      width: 100%;
+      border: 1px solid #000000;
+      margin: 3px 0px;
+      text-align: center;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .slotOccupied{
+      background-color: #ff1a1a;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .slotSelected{
+      background-color: #00cc00;
+    }
+  }
+  .custom-spinner-container{
+    .custom-spinner-box{
+      background-image: url(../../assets/imgs/ajaxloader.gif);
+      width: 40px;
+      height: 40px;
+      display: block;
+      background-repeat: no-repeat;
+      margin:0px auto;
+    }
+  }
+  .alert-message{
+    overflow: auto;
+  }
