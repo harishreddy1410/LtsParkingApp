@@ -20,7 +20,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 
-//import {Geolocation} from '@ionic-native/geolocation';
+import {Geolocation} from '@ionic-native/geolocation';
 
 @NgModule({
   declarations: [
