@@ -19,11 +19,12 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
-import { SlotsPage } from '../pages/slots/slots';
-import { ReportsPage } from '../pages/reports/reports';
-import { NotificationsPage } from '../pages/notifications/notificaitons';
-import { DataTablesModule } from 'angular-datatables';
+
 import {Geolocation} from '@ionic-native/geolocation';
+import {HttpModule} from '@angular/http';
+import { ParkingSlotService } from '../services/rest/parkingslot.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
   declarations: [
@@ -33,17 +34,15 @@ import {Geolocation} from '@ionic-native/geolocation';
     HomePage,
     TabsPage,
     AboutPage,
-    ContactPage,
-    SlotsPage,
-    ReportsPage,
-    NotificationsPage
+    ContactPage
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig.fire),
     NgxErrorsModule,
-    DataTablesModule
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -53,10 +52,7 @@ import {Geolocation} from '@ionic-native/geolocation';
     HomePage,
     TabsPage,
     ContactPage,
-    AboutPage,
-    SlotsPage,
-    ReportsPage,
-    NotificationsPage
+    AboutPage
   ],
   providers: [
     StatusBar,
@@ -65,7 +61,11 @@ import {Geolocation} from '@ionic-native/geolocation';
     AuthService,
     GlobalGenericService,
     Geolocation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ParkingSlotService,
+    HttpModule,
+    ApiProvider,
+    HttpClientModule
     
   ]
 })
