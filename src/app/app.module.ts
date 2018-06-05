@@ -4,7 +4,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-
 import { MyApp } from './app.component';
 
 import { AngularFireModule } from 'angularfire2';
@@ -24,7 +23,10 @@ import {Geolocation} from '@ionic-native/geolocation';
 import {HttpModule} from '@angular/http';
 import { ParkingSlotService } from '../services/rest/parkingslot.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ApiProvider } from '../providers/api/api';
+import { ParkingSlotApiProvider } from '../providers/parking-slot-api/parking-slot-api';
+import { ParkingTrafficApiProvider } from '../providers/parking-traffic-api/parking-traffic-api';
+import { IonicStorageModule } from '@ionic/storage';
+import { UserProfileApiProvider } from '../providers/user-profile-api/user-profile-api'
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { ApiProvider } from '../providers/api/api';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig.fire),
     NgxErrorsModule,
     HttpClientModule
@@ -64,9 +67,10 @@ import { ApiProvider } from '../providers/api/api';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ParkingSlotService,
     HttpModule,
-    ApiProvider,
-    HttpClientModule
-    
+    HttpClientModule,
+    ParkingSlotApiProvider,
+    ParkingTrafficApiProvider,
+    UserProfileApiProvider
   ]
 })
 export class AppModule {}

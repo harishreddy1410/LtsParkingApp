@@ -46,7 +46,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-firebase": {},
-      "cordova-plugin-geolocation": {}
+      "cordova-plugin-geolocation": {},
+      "cordova-sqlite-storage": {}
     }
   }
 }
