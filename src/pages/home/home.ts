@@ -183,7 +183,9 @@ storage.get("LogInUser").then((val) => {
     this.geolocation.getCurrentPosition().then((position) => { 
       userLatitude = position.coords.latitude;
       userLongitude = position.coords.longitude; 
+      console.log(userLatitude + "," + userLongitude);
       let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);
+      console.log(distance);
       if(event.target.className.indexOf("slotOccupied") < 0 && distance < 0.1){
         loader.dismiss();
         confirm.present();

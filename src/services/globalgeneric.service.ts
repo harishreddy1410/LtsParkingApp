@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class GlobalGenericService{
-    public isAdmin:boolean = false;
+
+    public isAdmin:boolean = true;
     private officeLatitude = 12.914649;
     private officeLongitude = 77.598765;
 
@@ -24,4 +25,5 @@ export class GlobalGenericService{
       convertDegreeToRadian(deg) {
         return deg * (Math.PI/180)
       }
+
 }

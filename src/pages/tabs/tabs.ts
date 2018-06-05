@@ -3,17 +3,19 @@ import { Component } from '@angular/core';
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
-
+import { GlobalGenericService } from '../../services/globalgeneric.service';
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-
+  isValid = false;
   tab1Root = HomePage;
   tab2Root = AboutPage;
   tab3Root = ContactPage;
 
-  constructor() {
-
+  constructor(public singleton:GlobalGenericService) {
+    if(singleton.isAdmin == true){
+      this.isValid = true;
+    }
   }
 }
