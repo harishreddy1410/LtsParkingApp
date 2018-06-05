@@ -10,7 +10,8 @@ import { ParkingSlotViewModel } from '../../dto/ParkingSlotViewModel';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../../services/auth.service';
 
-import { UserProfileApiProvider } from '../../providers/user-profile-api/user-profile-api'
+import { UserProfileApiProvider } from '../../providers/user-profile-api/user-profile-api';
+import { UserProfileViewModel } from '../../dto/UserProfileViewModel';
 
 //declare var google;
 
@@ -34,30 +35,16 @@ export class HomePage {
   public storage:Storage ,
 public auth: AuthService,
 public userProfileApiProvider:UserProfileApiProvider) {
-      
-        // storage.set('LoginUserEmail',this.auth.getEmail());
-        // storage.get('LoginUserEmail').then((val) => {
-        //         console.log('stoage email '+val);          
-        //  });
-        storage.get("LogInUser").then((userObj)=>{
-          if(userObj === null)
-          {
-            console.log("Storing Login user obje")
-          //   storage.set("LogInUser",
-          //   this.userProfileApiProvider.GetUserProfile(this.auth.getEmail()).subscribe(
-          //     res => {
-          //       console.log(res);
-          //     },
-          //     err => {
-          //       console.log("Erre : "+ err);
-          //     })
-          // );
-          }
-        })
-storage.get("LogInUser").then((val) => {
-  console.log("stored user obj");
-  console.log(val);
-})
+        // //Store - LoggedIn User in local sqllite storage
+        // storage.get('userObj').then((val) => {
+        //         if(val=== undefined || val === null){
+        //           this.genericService.StoreUserObj();
+        //         }
+        //  });       
+
+        //  var test = this.genericService.GetLoggedInUserProfile();
+        //  debugger
+
   //Sample : Parking slot get call
     this.parkingSlotApiProvider.GetAllParkingSlots().subscribe(
       allParkingSlots => {

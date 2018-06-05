@@ -21,12 +21,12 @@ import { ContactPage } from '../pages/contact/contact';
 
 import {Geolocation} from '@ionic-native/geolocation';
 import {HttpModule} from '@angular/http';
-import { ParkingSlotService } from '../services/rest/parkingslot.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ParkingSlotApiProvider } from '../providers/parking-slot-api/parking-slot-api';
 import { ParkingTrafficApiProvider } from '../providers/parking-traffic-api/parking-traffic-api';
 import { IonicStorageModule } from '@ionic/storage';
 import { UserProfileApiProvider } from '../providers/user-profile-api/user-profile-api'
+import { StorageHelper } from '../helpers/StorageHelper';
 
 @NgModule({
   declarations: [
@@ -65,12 +65,12 @@ import { UserProfileApiProvider } from '../providers/user-profile-api/user-profi
     GlobalGenericService,
     Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ParkingSlotService,
+    StorageHelper,
     HttpModule,
     HttpClientModule,
     ParkingSlotApiProvider,
     ParkingTrafficApiProvider,
-    UserProfileApiProvider
+    UserProfileApiProvider    
   ]
 })
 export class AppModule {}

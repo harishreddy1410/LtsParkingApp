@@ -1,4 +1,4 @@
-export class UserProfileViewModel{
+export class UserProfileViewModel{    
     public Id:number;
     public FirstName:string;
     public LastName:string;
