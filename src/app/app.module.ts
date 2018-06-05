@@ -21,6 +21,10 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 
 import {Geolocation} from '@ionic-native/geolocation';
+import {HttpModule} from '@angular/http';
+import { ParkingSlotService } from '../services/rest/parkingslot.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ApiProvider } from '../providers/api/api';
 
 @NgModule({
   declarations: [
@@ -34,9 +38,11 @@ import {Geolocation} from '@ionic-native/geolocation';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig.fire),
-    NgxErrorsModule
+    NgxErrorsModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -55,7 +61,11 @@ import {Geolocation} from '@ionic-native/geolocation';
     AuthService,
     GlobalGenericService,
     Geolocation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ParkingSlotService,
+    HttpModule,
+    ApiProvider,
+    HttpClientModule
     
   ]
 })

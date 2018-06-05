@@ -11,13 +11,16 @@
 
 <ion-content padding>
     <div class="parkingSlotLeftArea">
-        <div class="parkingArea" *ngFor="let parkingSlot of parkingSlots" [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':''" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
-          {{parkingSlot.Name}}            
+        <div class="parkingArea" *ngFor="let parkingSlot of parkingSlots" [ngClass]="(parkingSlot.isOccupied)?'slotOccupied':''" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
+          {{parkingSlot.name}}            
         </div>
     </div>
     <div class="parkingSlotRightArea">
-        <div class="parkingArea" *ngFor="let parkingSlot of parkingSlots" [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':''" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
-            {{parkingSlot.Name}}            
+        <div class="parkingArea" *ngFor="let parkingSlot of parkingSlots" [ngClass]="(parkingSlot.isOccupied)?'slotOccupied':''" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
+            {{parkingSlot.name}}            
           </div>
+    </div>
+    <div>
+      {{parkingSlots}}
     </div>
 </ion-content>
