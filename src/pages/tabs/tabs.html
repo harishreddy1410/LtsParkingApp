@@ -21,7 +21,7 @@
             <h1>AR</h1>
         </div>
         <div class="row">
-          <h3>{{loggedInUserProfile.FirstName}}</h3>
+          <h3>{{(loggedInUserProfile) ? loggedInUserProfile.FirstName +' '+ loggedInUserProfile.LastName : ""}}</h3>
         </div>
         
       </div>

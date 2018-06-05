@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 
 import { UserProfileApiProvider } from '../../providers/user-profile-api/user-profile-api';
 import { UserProfileViewModel } from '../../dto/UserProfileViewModel';
+import { ParkingDivisionViewModel } from '../../dto/ParkingDivisionViewModel';
 
 //declare var google;
 
@@ -21,12 +22,13 @@ import { UserProfileViewModel } from '../../dto/UserProfileViewModel';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+    
   // @ViewChild('map') mapElement: ElementRef;
   //map: any;
   // directionsService = new google.maps.DirectionsService;
   // directionsDisplay = new google.maps.DirectionsRenderer;
   parkingSlots:any;
+  public parkingDivisionsViewModel:ParkingDivisionViewModel[] = [];
   
     constructor(public navCtrl: NavController,public alertCtrl: AlertController, 
     public geolocation: Geolocation, public genericService : GlobalGenericService,
@@ -44,7 +46,11 @@ public userProfileApiProvider:UserProfileApiProvider) {
 
         //  var test = this.genericService.GetLoggedInUserProfile();
         //  debugger
-
+        
+this.parkingSlotApiProvider.GetLocationParkingArea(1).subscribe(res=>{    
+    Object.assign(this.parkingDivisionsViewModel,res);
+    console.log(this.parkingDivisionsViewModel);
+})
   //Sample : Parking slot get call
     this.parkingSlotApiProvider.GetAllParkingSlots().subscribe(
       allParkingSlots => {

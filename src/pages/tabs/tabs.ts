@@ -15,12 +15,12 @@ export class TabsPage {
   tab2Root = AboutPage;
   tab3Root = ContactPage;
 
-  constructor(public singleton:GlobalGenericService) {
+   constructor(public singleton:GlobalGenericService) {
     if(singleton.isAdmin == true){
       this.isValid = true;
     }
     singleton.StoreUserObj();    
-    singleton.GetLoggedInUserProfile().then(res=>{      
+    singleton.GetLoggedInUserProfile().then(res=>{    
       this.loggedInUserProfile = res;
     });
   }  

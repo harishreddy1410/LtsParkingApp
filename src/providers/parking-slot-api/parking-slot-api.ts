@@ -37,8 +37,10 @@ export class ParkingSlotApiProvider {
         return this.http.post(this.apiUrl.concat("api/ParkingSlot/"),parkingSlotViewModel,this.httpOptions);
       }
       DeleteParkingSlot(id:number){
-        return this.http.delete(this.apiUrl.concat("api/ParkingSlot/",id.toString()),this.httpOptions)
+        return this.http.delete(this.apiUrl.concat("api/ParkingSlot/",id.toString()),this.httpOptions);
       }
-      
+      GetLocationParkingArea(locationId:number){
+        return this.http.get(this.apiUrl.concat("api/ParkingSlot/GetLocationParkingSlots/",locationId.toString()),this.httpOptions);
+      }
 
 }
