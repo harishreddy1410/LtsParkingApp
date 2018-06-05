@@ -22,6 +22,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { SlotsPage } from '../pages/slots/slots';
 import { ReportsPage } from '../pages/reports/reports';
 import { NotificationsPage } from '../pages/notifications/notificaitons';
+import { DataTablesModule } from 'angular-datatables';
 import {Geolocation} from '@ionic-native/geolocation';
 
 @NgModule({
@@ -41,7 +42,8 @@ import {Geolocation} from '@ionic-native/geolocation';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig.fire),
-    NgxErrorsModule
+    NgxErrorsModule,
+    DataTablesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

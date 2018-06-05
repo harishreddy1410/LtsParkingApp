@@ -33,7 +33,7 @@
         <button ion-item *ngIf="isValid" (click)="GotoSlots()">Manage Slots</button>
         <button ion-item *ngIf="isValid" (click)="GotoReports()">Reports</button>
         <button ion-item *ngIf="isValid" (click)="GotoNotifications()">Manage Notifications</button>
-        <button ion-item>Log Out</button>
+        <button ion-item (click)="signOut()">Log Out</button>
     </ion-list>
   </ion-content>
   
