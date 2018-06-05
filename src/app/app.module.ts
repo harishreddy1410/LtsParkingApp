@@ -19,6 +19,9 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
+import { SlotsPage } from '../pages/slots/slots';
+import { ReportsPage } from '../pages/reports/reports';
+import { NotificationsPage } from '../pages/notifications/notificaitons';
 
 import {Geolocation} from '@ionic-native/geolocation';
 import {HttpModule} from '@angular/http';
@@ -34,7 +37,10 @@ import { ApiProvider } from '../providers/api/api';
     HomePage,
     TabsPage,
     AboutPage,
-    ContactPage
+    ContactPage,
+    SlotsPage,
+    ReportsPage,
+    NotificationsPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +58,10 @@ import { ApiProvider } from '../providers/api/api';
     HomePage,
     TabsPage,
     ContactPage,
-    AboutPage
+    AboutPage,
+    SlotsPage,
+    ReportsPage,
+    NotificationsPage
   ],
   providers: [
     StatusBar,
