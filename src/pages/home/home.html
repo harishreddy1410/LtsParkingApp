@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content padding>
-    <div class="parkingSlotLeftArea">
+    <!-- <div class="parkingSlotLeftArea">
         <div class="parkingArea" *ngFor="let parkingSlot of parkingSlots" [ngClass]="(parkingSlot.isOccupied)?'slotOccupied':''" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
           {{parkingSlot.name}}            
         </div>
@@ -22,5 +22,20 @@
     </div>
     <div>
       {{parkingSlots}}
+    </div> -->
+
+    <!--If there are not division present in the location - display a message -->
+    <div *ngIf="parkingDivisionsViewModel.length==0">
+      No Parking Divisions found for your location
     </div>
+    <!--If there is parking division present in the users location display -->
+    <div class="parkingSlotLeftArea" *ngFor="let parkingDivisionTemp of parkingDivisionsViewModel">
+      <div>
+          <div>{{ (parkingDivisionTemp) ? parkingDivisionTemp.Name : "" }}   </div>
+                    
+      <div class="parkingArea" *ngFor="let parkingSlot of parkingDivisionTemp.ParkingSlots" [ngClass]="(parkingSlot.isOccupied)?'slotOccupied':''" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
+          {{ (parkingSlot) ?  parkingSlot.Name: "" }}            
+        </div>
+    </div>
+  </div>
 </ion-content>

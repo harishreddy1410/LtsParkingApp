@@ -2,11 +2,17 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-import {LoadingController} from 'ionic-angular'
-import {Geolocation} from '@ionic-native/geolocation';
-import { ApiProvider } from './../../providers/api/api';
-import {GlobalGenericService} from '../../services/globalgeneric.service';
+import { LoadingController } from 'ionic-angular'
+import { Geolocation } from '@ionic-native/geolocation';
+import { ParkingSlotApiProvider } from './../../providers/parking-slot-api/parking-slot-api';
+import { GlobalGenericService } from '../../services/globalgeneric.service';
 import { ParkingSlotViewModel } from '../../dto/ParkingSlotViewModel';
+import { Storage } from '@ionic/storage';
+import { AuthService } from '../../services/auth.service';
+
+import { UserProfileApiProvider } from '../../providers/user-profile-api/user-profile-api';
+import { UserProfileViewModel } from '../../dto/UserProfileViewModel';
+import { ParkingDivisionViewModel } from '../../dto/ParkingDivisionViewModel';
 
 //declare var google;
 
@@ -16,77 +22,37 @@ import { ParkingSlotViewModel } from '../../dto/ParkingSlotViewModel';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+    
   // @ViewChild('map') mapElement: ElementRef;
   //map: any;
   // directionsService = new google.maps.DirectionsService;
   // directionsDisplay = new google.maps.DirectionsRenderer;
   parkingSlots:any;
-  // parkingSlots =[
-  //       {
-  //       "Id":1,
-  //       "Name": "1",
-  //       "IsOccupied": true,
-  //       "SequenceOrder":1,
-  //       "IsActive":true
-  //     },
-  //     {
-  //       "Id":2,
-  //       "Name": "2",
-  //       "IsOccupied": false,
-  //       "SequenceOrder":2,
-  //       "IsActive":true
-  //     },
-  //     {
-  //       "Id":3,
-  //       "Name": "3",
-  //       "IsOccupied": false,
-  //       "SequenceOrder":3,
-  //       "IsActive":true
-  //     },
-  //     {
-  //       "Id":4,
-  //       "Name": "4",
-  //       "IsOccupied": false,
-  //       "SequenceOrder":4,
-  //       "IsActive":true
-  //     },
-  //     {
-  //       "Id":5,
-  //       "Name": "5",
-  //       "IsOccupied": false,
-  //       "SequenceOrder":5,
-  //       "IsActive":true
-  //     },
-  //     {
-  //       "Id":6,
-  //       "Name": "6",
-  //       "IsOccupied": false,
-  //       "SequenceOrder":6,
-  //       "IsActive":true
-  //     },
-  //     {
-  //       "Id":7,
-  //       "Name": "7",
-  //       "IsOccupied": false,
-  //       "SequenceOrder":7,
-  //       "IsActive":true
-  //     },
-  //     {
-  //       "Id":8,
-  //       "Name": "8",
-  //       "IsOccupied": false,
-  //       "SequenceOrder":8,
-  //       "IsActive":true
-  //     }
-  //   ];
+  public parkingDivisionsViewModel:ParkingDivisionViewModel[] = [];
+  
     constructor(public navCtrl: NavController,public alertCtrl: AlertController, 
     public geolocation: Geolocation, public genericService : GlobalGenericService,
   public loadingCtrl : LoadingController,
-private apiProvider:ApiProvider) {
+  private parkingSlotApiProvider :ParkingSlotApiProvider,
+  public storage:Storage ,
+public auth: AuthService,
+public userProfileApiProvider:UserProfileApiProvider) {
+        // //Store - LoggedIn User in local sqllite storage
+        // storage.get('userObj').then((val) => {
+        //         if(val=== undefined || val === null){
+        //           this.genericService.StoreUserObj();
+        //         }
+        //  });       
 
+        //  var test = this.genericService.GetLoggedInUserProfile();
+        //  debugger
+        
+this.parkingSlotApiProvider.GetLocationParkingArea(1).subscribe(res=>{    
+    Object.assign(this.parkingDivisionsViewModel,res);
+    console.log(this.parkingDivisionsViewModel);
+})
   //Sample : Parking slot get call
-    this.apiProvider.GetAllParkingSlots().subscribe(
+    this.parkingSlotApiProvider.GetAllParkingSlots().subscribe(
       allParkingSlots => {
         console.log("Resp 1");
         this.parkingSlots = allParkingSlots;
@@ -97,7 +63,7 @@ private apiProvider:ApiProvider) {
       () => { console.log("Pulling slots pull successful");}
     );
 //Sample : Parking slot get call
-    this.apiProvider.GetParkingSlot(5).subscribe(
+    this.parkingSlotApiProvider.GetParkingSlot(5).subscribe(
         parkingSlotRes =>{
           console.log("Parking slot pull successful")
           console.log(parkingSlotRes);
@@ -108,7 +74,7 @@ private apiProvider:ApiProvider) {
     updateParkingSlotVm.Id = 10;
     updateParkingSlotVm.IsOccupied = true;
     
-    this.apiProvider.UpdateParkingSlot(updateParkingSlotVm)
+    this.parkingSlotApiProvider.UpdateParkingSlot(updateParkingSlotVm)
     .subscribe(data => {
       console.log("update successful");
       console.log(data);
@@ -122,13 +88,13 @@ private apiProvider:ApiProvider) {
     createParkingSlotVm.SequenceOrder = 6;
     createParkingSlotVm.UserId = 8;
     console.log("creating parking slot");
-    this.apiProvider.CreateParkingSlot(createParkingSlotVm).subscribe(resp=>{
+    this.parkingSlotApiProvider.CreateParkingSlot(createParkingSlotVm).subscribe(resp=>{
       console.log("Parking slot creation successfull");
       console.log(resp);
     });
     
     //Sample : Parking slot delete call
-    this.apiProvider.DeleteParkingSlot(12).subscribe(
+    this.parkingSlotApiProvider.DeleteParkingSlot(12).subscribe(
       resp =>{
         console.log("Parking slot delete successfull");
         console.log(resp);

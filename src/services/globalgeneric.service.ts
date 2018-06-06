@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
-
+import { StorageHelper } from '../helpers/StorageHelper';
+import { UserProfileViewModel } from '../dto/UserProfileViewModel';
 @Injectable()
 export class GlobalGenericService{
+
+  public loggedInUser:UserProfileViewModel = new UserProfileViewModel();    
+    
+    constructor(private storageHelper:StorageHelper) {        
+    }
 
     public isAdmin:boolean = true;
     public userName:string = "Aqueel Rahman";
     private officeLatitude = 12.914649;
     private officeLongitude = 77.598765;
-
+    
     //calulate the distance between the user and parking slots
     getDistanceBetweenCoordinates(userLatitude,userLongitude) {
         var R = 6371; // Radius of the earth in km
@@ -27,4 +33,13 @@ export class GlobalGenericService{
         return deg * (Math.PI/180)
       }
 
+      StoreUserObj(){
+        this.storageHelper.StoreUserProfileInStorage();
+      }
+
+      async GetLoggedInUserProfile() {
+        var userProfile:UserProfileViewModel;
+        userProfile = await this.storageHelper.GetLoggedInUserFromStorage()
+        return userProfile;
+      }
 }
