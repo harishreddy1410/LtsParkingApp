@@ -10,6 +10,7 @@ export class GlobalGenericService{
     }
 
     public isAdmin:boolean = true;
+    public userName:string = "Aqueel Rahman";
     private officeLatitude = 12.914649;
     private officeLongitude = 77.598765;
     
