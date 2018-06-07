@@ -28,8 +28,6 @@ export class TabsPage {
 
 
 
-   constructor(public singleton:GlobalGenericService) {
-
     if(singleton.isAdmin == true){
       this.isValid = true;
       console.log(singleton.isAdmin+' asdf');
@@ -39,7 +37,7 @@ export class TabsPage {
       this.loggedInUserProfile = res;
     });
   }  
-  }
+  
   GotoSlots(){
       this.navCtrl.push(SlotsPage);
   }
