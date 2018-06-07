@@ -7,21 +7,37 @@
   </ion-header>
 
 <ion-content>
-    <table datatable >
-        <!-- [dtOptions]="dtOptions" -->
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>First name</th>
-            <th>Last name</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let person of persons">
-            <!-- <td>{{ person.id }}</td> -->
-            <!-- <td>{{ person.firstName }}</td> -->
-            <!-- <td>{{ person.lastName }}</td> -->
-          </tr>
-        </tbody>
-        </table>
+
+  <!-- <ion-select>
+    <ion-option *ngFor="let location in locations">
+        {location}
+    </ion-option>
+  </ion-select> -->
+
+  <ion-item>
+      <ion-label>Location</ion-label>
+  <ion-select [(ngModel)]="locationId">
+    <ion-option [value]="0">Select Location</ion-option>
+      <ion-option *ngFor="let employee of locations" [value]="employee.Id">{{employee.Name}}</ion-option>
+  </ion-select>
+</ion-item>
+  <ion-item>
+      <ion-label>From Date</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="fromDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>To Date</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="toDate"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+          <button ion-button icon-end>
+              Report
+              <ion-icon name="book"></ion-icon>
+            </button>
+      </ion-item>
+
+
+        
+
 </ion-content>

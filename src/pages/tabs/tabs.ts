@@ -26,17 +26,15 @@ export class TabsPage {
     public singleton:GlobalGenericService,
     private auth: AuthService) {
 
-
-
-    if(singleton.isAdmin == true){
-      this.isValid = true;
-      console.log(singleton.isAdmin+' asdf');
-    }
-     singleton.StoreUserObj();    
-    singleton.GetLoggedInUserProfile().then(res=>{    
-      this.loggedInUserProfile = res;
-    });
-  }  
+        if(singleton.isAdmin == true){
+          this.isValid = true;
+          console.log(singleton.isAdmin+' asdf');
+        }
+        singleton.StoreUserObj();    
+        singleton.GetLoggedInUserProfile().then(res=>{    
+          this.loggedInUserProfile = res;
+        });
+      }  
   
   GotoSlots(){
       this.navCtrl.push(SlotsPage);
