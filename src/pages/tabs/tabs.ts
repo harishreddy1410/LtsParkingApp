@@ -25,21 +25,16 @@ export class TabsPage {
   constructor(public navCtrl: NavController,
     public singleton:GlobalGenericService,
     private auth: AuthService) {
-
-
-
-   constructor(public singleton:GlobalGenericService) {
-
-    if(singleton.isAdmin == true){
-      this.isValid = true;
-      console.log(singleton.isAdmin+' asdf');
-    }
-     singleton.StoreUserObj();    
-    singleton.GetLoggedInUserProfile().then(res=>{    
-      this.loggedInUserProfile = res;
-    });
-  }  
-  }
+        if(singleton.isAdmin == true){
+          this.isValid = true;
+          console.log(singleton.isAdmin+' asdf');
+        }
+        singleton.StoreUserObj();    
+        singleton.GetLoggedInUserProfile().then(res=>{    
+          this.loggedInUserProfile = res;
+        });
+      }  
+  
   GotoSlots(){
       this.navCtrl.push(SlotsPage);
   }
