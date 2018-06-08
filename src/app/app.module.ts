@@ -30,6 +30,7 @@ import { ParkingTrafficApiProvider } from '../providers/parking-traffic-api/park
 import { IonicStorageModule } from '@ionic/storage';
 import { UserProfileApiProvider } from '../providers/user-profile-api/user-profile-api'
 import { StorageHelper } from '../helpers/StorageHelper';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { StorageHelper } from '../helpers/StorageHelper';
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig.fire),
     NgxErrorsModule,
-    HttpClientModule
+    HttpClientModule,
+    DataTablesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

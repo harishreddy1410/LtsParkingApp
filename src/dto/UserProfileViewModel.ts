@@ -3,7 +3,7 @@ export class UserProfileViewModel{
     public FirstName:string;
     public LastName:string;
     public PreferredName:string;
-    public Locationid:number;
+    public LocationId:number;
     public Role:any;
     public EmployeeShiftId:number;
     public Email:string;

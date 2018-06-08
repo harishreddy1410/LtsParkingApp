@@ -1,3 +1,4 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <ion-header>
     <ion-navbar>
         <ion-title>
@@ -15,9 +16,9 @@
 
   <ion-item>
       <ion-label>Location</ion-label>
-  <ion-select [(ngModel)]="locationId">
+  <ion-select aria-required="true" [(ngModel)]="locationId">
     <ion-option [value]="0">Select Location</ion-option>
-      <ion-option *ngFor="let employee of locations" [value]="employee.Id">{{employee.Name}}</ion-option>
+      <ion-option *ngFor="let location of locations" [value]="location.Id">{{location.Name}}</ion-option>
   </ion-select>
 </ion-item>
   <ion-item>
@@ -30,13 +31,36 @@
       </ion-item>
 
       <ion-item>
-          <button ion-button icon-end>
-              Report
+          <button ion-button icon-end (click)="GetParkingReports()">
+              Generate Report
               <ion-icon name="book"></ion-icon>
             </button>
       </ion-item>
 
-
+      <table datatable id="tblReports" class="display responsive nowrap"  width="100%" [dtOptions]="dtOptions">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Slot</th>
+            <th>VehicleNum</th>
+            <th>InTime</th>
+            <th>OutTime</th>
+            <th>Vehicle Type</th>
+            <th>Slot Type</th>
+          </tr>
+        </thead>
+        <tbody>
+            <!-- <tr *ngFor="let report of parkingReport">
+                <td>{{ report.UserName }}</td>
+                <td>{{ report.ParkingSlotId }}</td>
+                <td>{{ report.VehicleNumber }}</td>
+                <td>{{ report.InTime | date:'yyyy-MM-dd HH:mm' }}</td>
+                <td>{{ report.OutTime | date:'yyyy-MM-dd HH:mm' }}</td>
+                <td>{{ report.VehicleType }}</td>
+                <td>{{ report.ParkingSlotType}}</td> -->
+             
+        </tbody>
+        </table>
         
 
     <!-- <table datatable [dtOptions]="dtOptions">
@@ -48,7 +72,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let person of persons">
+          <tr *ngFor="let person of parkingReport">
             <td>{{ person.id }}</td>
             <td>{{ person.firstName }}</td>
             <td>{{ person.lastName }}</td>
