@@ -65,7 +65,6 @@ export class ReportsPage {
 
     this.dtOptions = {
       pageLength: 10,
-      // Use this attribute to enable the responsive extension
       responsive: true
     };
   }

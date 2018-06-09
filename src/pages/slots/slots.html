@@ -7,5 +7,182 @@
   </ion-header>
 
 <ion-content>
-    
+
+        <div id="divManageParkingArea" class="accordion vertical">
+                <ul>
+                    <li>
+                        <input type="radio" id="radio-1" name="radio-accordion" checked="checked" />
+                        <label for="radio-1">Title&nbsp;One</label>
+                        <div class="content">
+                            <form [formGroup]="addSlotForm" (submit)="saveParkingSlot($event)">                                
+                                <ion-item>
+                                    <ion-label>Location</ion-label>
+                                    <ion-select [(ngModel)]="locationId" (ionChange)="PopulateCompanyForLocation($event)" formControlName="locationId" required>
+                                            <ion-option [value]="0">Select Location</ion-option>
+                                            <ion-option *ngFor="let location of parkingLocations" [value]="location.Id">{{location.Name}}</ion-option>
+                                          </ion-select>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Company</ion-label>
+                                    <ion-select [(ngModel)]="companyId" (ionChange)="PopulateLocationDivisions($event)" [disabled]="locationId==0" formControlName="companyId" aria-required="true">
+                                            <ion-option [value]="0">Select Company</ion-option>
+                                            <ion-option *ngFor="let company of locationCompanies" [value]="company.Id">{{company.Name}}</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                                <ion-item>
+                                <ion-label>Parking Division</ion-label>
+                                <ion-select [disabled]="companyId==0" [(ngModel)]="parkingDivisionId" formControlName="parkingDivisionId" aria-required="true">
+                                        <ion-option [value]="0">Select Parking Division</ion-option>
+                                        <ion-option *ngFor="let division of parkingDivisions" [value]="division.Id">{{division.Name}}</ion-option>
+                                </ion-select>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Slot Name</ion-label>
+                                    <ion-input  [(ngModel)]="slotName"  maxlength="4" placeholder="Enter slot name" [disabled]="parkingDivisionId==0" formControlName="slotName" type="text" required></ion-input>
+                                </ion-item>
+                                <ion-item>
+                                    <ion-label>Slot Type</ion-label>
+                                    <ion-select [(ngModel)]="slotType" formControlName="slotType" [disabled]="slotName==''" required>
+                                            <ion-option [value]="-1">Select Slot Type</ion-option>
+                                            <ion-option [value]="0">Two wheeler</ion-option>
+                                            <ion-option [value]="1">Four wheeler</ion-option>
+                                    </ion-select>
+                                </ion-item>
+                                <ion-item>
+                                    
+                                        <p *ngIf="locationId==0" [class.hide]="locationId==0"  >* Username is required</p>
+                                        <!-- <p ng-show="myForm.username.$invalid && !myForm.username.$pristine">* Username must be an email address</p>
+                                        <p ng-show="myForm.username.$error.minlength">* Username must be longer than 5 characters</p>
+                                        <p ng-show="myForm.password.$error.required">* Password is required</p>
+                                        <p ng-show="myForm.password.$error.minlength">* Password must be longer than 6 characters</p> -->
+                                    
+                            
+                                </ion-item>
+                                <ion-item>
+                                    <button ion-button type="submit" [disabled]="!addSlotForm.valid || slotType == -1">Add Slot</button>
+                                </ion-item>
+                            </form>
+                            <ion-item *ngIf="slotFormValidationMessage.length > 0">
+                                <ion-label class="danger" name="slotFormValidationMessage">
+                                    {{slotFormValidationMessage}}
+                                </ion-label>
+                            </ion-item>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="radio" id="radio-2" name="radio-accordion" />
+                        <label for="radio-2">Title&nbsp;Two</label>
+                        <div class="content">
+                              </div>
+                    </li>
+                    <li>
+                        <input type="radio" id="radio-3" name="radio-accordion" />
+                        <label for="radio-3">Title&nbsp;Three</label>
+                        <div class="content">
+                            </div>
+                    </li>
+                    <li>
+                        <input type="radio" id="radio-4" name="radio-accordion" />
+                        <label for="radio-4">Title&nbsp;Four</label>
+                        <div class="content">
+                             </div>
+                    </li>
+                </ul>
+            </div>
 </ion-content>
+<style>
+    /*
+*
+*    Author:    Michael Raffaele <michael@mraffaele.com>
+*    Date:    25th October 2011
+*    Info:     http://www.mraffaele.com/blog/2011/10/25/css-accordion-no-javascript/
+*
+*/
+
+/* Shared for all accordion types */
+.accordion {
+    font-family:Arial, Helvetica, sans-serif; 
+    margin:0 auto;
+    font-size:14px;
+    border:1px solid #542437;
+    border-radius:10px;
+    width:100%;;
+    padding:10px;
+    background:#fff;
+}
+.accordion ul {
+    list-style:none;
+    margin:0;
+    padding:0;    
+}
+.accordion li {
+    margin:0;
+    padding:0;
+}
+.accordion [type=radio], .accordion [type=checkbox] {
+    display:none;
+}
+.accordion label {
+    display:block;
+    font-size:16px;
+    line-height:16px;
+    background:#D95B43;
+    border:1px solid #542437;
+    color:#542437;
+    text-shadow:1px 1px 1px rgba(255,255,255,0.3);
+    font-weight:700;
+    cursor:pointer;
+    text-transform:uppercase;
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+}
+.accordion ul li label:hover, .accordion [type=radio]:checked ~ label, .accordion [type=checkbox]:checked ~ label {
+    background:#C02942;
+    color:#FFF;
+    text-shadow:1px 1px 1px rgba(0,0,0,0.5)
+}
+.accordion .content {
+    padding:0 10px;
+    overflow:hidden;
+    border:1px solid #fff; /* Make the border match the background so it fades in nicely */
+    -webkit-transition: all .5s ease-out;
+    -moz-transition: all .5s ease-out;
+}
+.accordion p {
+    color:#333;
+    margin:0 0 10px;
+}
+.accordion h3 {
+    color:#542437;
+    padding:0;
+    margin:10px 0;
+}
+
+
+/* Vertical */
+.vertical ul li {
+    overflow:hidden;
+    margin:0 0 1px;
+}
+.vertical ul li label {
+    padding:10px;
+}
+.vertical [type=radio]:checked ~ label, .vertical [type=checkbox]:checked ~ label {
+    border-bottom:0;
+}
+.vertical ul li label:hover {
+    border:1px solid #542437; /* We don't want the border to disappear on hover */
+}
+.vertical ul li .content {
+    height:0px;
+    border-top:0;
+}
+.vertical [type=radio]:checked ~ label ~ .content, .vertical [type=checkbox]:checked ~ label ~ .content {
+    min-height:300px;
+    height: auto;
+    border:1px solid #542437;
+}
+.hide {
+  display: none;
+}
+</style>
