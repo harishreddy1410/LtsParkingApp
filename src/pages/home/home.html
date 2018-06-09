@@ -25,17 +25,39 @@
     </div> -->
 
     <!--If there are not division present in the location - display a message -->
-    <div *ngIf="parkingDivisionsViewModel.length==0">
+    <!-- <div *ngIf="parkingDivisionsViewModel.length==0">
       No Parking Divisions found for your location
-    </div>
-    <!--If there is parking division present in the users location display -->
-    <div class="parkingSlotLeftArea" *ngFor="let parkingDivisionTemp of parkingDivisionsViewModel">
+    </div>-->
+    <!--If there is parking division present in the users location display
+    <div class="parkingSlotLeftArea" *ngFor="let parkingDivisionTemp of parkingLeftSlots">
       <div>
-          <div>{{ (parkingDivisionTemp) ? parkingDivisionTemp.Name : "" }}   </div>
+          <div>{{ (parkingDivisionTemp) ? parkingDivisionTemp.Name : "" }}   </div> 
                     
-      <div class="parkingArea" *ngFor="let parkingSlot of parkingDivisionTemp.ParkingSlots" [ngClass]="(parkingSlot.isOccupied)?'slotOccupied':''" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
+      <div class="parkingArea" *ngFor="let parkingSlot of parkingLeftSlots" [ngClass]="(parkingSlot.isOccupied)?'slotOccupied':'slotAvailale'" [ngClass]="(parkingSlot.isActive)?'slotAvailable':'slotUnAvailale'" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
           {{ (parkingSlot) ?  parkingSlot.Name: "" }}            
         </div>
     </div>
-  </div>
+  </div> -->
+  <div class="locationName">Location: Bengaluru</div>
+      <div class="parkingSlotLeftArea">
+          <div class="divisionName">Division 1</div>
+          <div class="parkingArea" *ngFor="let parkingSlot of parkingLeftSlots" 
+          [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':'slotAvailable'"  
+          [ngClass]="(parkingSlot.IsActive)?'':'slotUnavailable'" 
+          (click)="showSlotDetailsModalPopup($event)" [attr.data-slot-id]="(parkingSlot.Id)"
+          [attr.data-slot-type]="(parkingSlot.Type)">    
+          <div class="slotNumber">{{(parkingSlot.Id)}}</div>  
+          </div>
+        </div>
+      
+        <div class="parkingSlotRightArea">
+            <div class="divisionName">Division 1</div>
+          <div class="parkingArea" *ngFor="let parkingSlot of parkingRightSlots" 
+          [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':'slotAvailable'" 
+          [ngClass]="(parkingSlot.IsActive)?'slotUnavailable':''" 
+          (click)="showSlotDetailsModalPopup($event)" [attr.data-slot-id]="(parkingSlot.Id)" 
+          [attr.data-slot-type]="(parkingSlot.Type)">
+          <div class="slotNumber">{{(parkingSlot.Id)}}</div> 
+          </div>
+        </div>
 </ion-content>

@@ -2,10 +2,32 @@
     height: 200px;
     //background: linear-gradient(#118dfa,#fff);
     background-color: #C0C0C0;
+    padding: 50px 0px;
 }
 
 .appLogo{
         /* margin: 0px auto; */
         left: 25%;
         position: relative;
+}
+
+.avatar{
+    height: 80px;
+    width: 80px;
+    border: 1px solid black;
+    border-radius: 50%;
+    text-align: center;
+    margin: 0px auto;
+    display: block;
+    font-size: 30px;
+    padding: 20px 0px;
+    background-color: cornflowerblue;
+}
+
+.avatarName{
+    text-align: center;
+    display: block;
+    margin-top: 15px;
+    font-size: 20px;
+    color: blue;
 }
