@@ -1,10 +1,11 @@
 <ion-header>
-  <ion-navbar>
+    
+  <ion-navbar color="primary">
       <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>
-          <div class="title"><img src="assets/imgs/LTS-Name_Logo.png"></div>
+          <div><img class="appLogo" src="assets/imgs/LTS-Name_Logo.png"></div>
       </ion-title>
   </ion-navbar>
 </ion-header>
@@ -17,11 +18,11 @@
         <ion-title>Menu</ion-title>
       </ion-toolbar> -->
       <div class="profileHeader">
-        <div class="row">
-            <h1>AR</h1>
+        <div class="row avatar">
+            <div>AR</div>
         </div>
-        <div class="row">
-          <h3>{{(loggedInUserProfile) ? loggedInUserProfile.FirstName +' '+ loggedInUserProfile.LastName : ""}}</h3>
+        <div class="row avatarName">
+          <div color="primary">{{(loggedInUserProfile) ? loggedInUserProfile.FirstName +' '+ loggedInUserProfile.LastName : ""}}</div>
         </div>
         
       </div>
@@ -30,9 +31,12 @@
   <ion-content >
     
     <ion-list>
-        <button ion-item *ngIf="isValid" (click)="GotoSlots()">Manage Slots</button>
-        <button ion-item *ngIf="isValid" (click)="GotoReports()">Reports</button>
-        <button ion-item *ngIf="isValid" (click)="GotoNotifications()">Manage Notifications</button>
+        <button ion-item menu-close (click)="GotoHome()">Home</button>
+        <button ion-item menu-close *ngIf="isValid" (click)="GotoSlots()">Manage Slots</button>
+        <button ion-item menu-close *ngIf="isValid" (click)="GotoReports()">Reports</button>
+        <!-- <button ion-item *ngIf="isValid" (click)="GotoNotifications()">Manage Notifications</button> -->
+        <button ion-item menu-close (click)="GotoAbout()">About Us</button>
+        <button ion-item menu-close (click)="GotoContact()">Contact</button>
         <button ion-item (click)="signOut()">Log Out</button>
     </ion-list>
   </ion-content>
@@ -40,12 +44,12 @@
 </ion-menu>
 
 
-<ion-nav #content [root]="rootPage"></ion-nav>
+<ion-nav #content [root]="homeRoot"></ion-nav>
 <!--Code for Menu Toggle ends-->
 
-<ion-tabs>
-  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>
-</ion-tabs>
+<!-- <ion-tabs color="primary">
+  <ion-tab [root]="homeRoot" tabTitle="Home" tabIcon="home"></ion-tab>
+  <ion-tab [root]="aboutRoot" tabTitle="About" tabIcon="information-circle"></ion-tab>
+  <ion-tab [root]="contactRoot" tabTitle="Contact" tabIcon="contacts"></ion-tab>
+</ion-tabs> -->
 
