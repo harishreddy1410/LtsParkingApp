@@ -20,56 +20,89 @@ page-home {
     text-align: center;
   }
 
+  .parkingPlace{
+    border: 1px solid #a9a9a9;
+    padding: 5px;
+  }
   .parkingSlotLeftArea{
     width:40%;
-    display: inline-block;
-    .parkingArea{
-      height: 25px;
-      width: 100%;
-      border: 1px solid #000000;
-      margin: 3px 0px;
-      text-align: center;
-      background-color: #f2f2f2;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .slotOccupied{
-      background-color: #ff1a1a;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-    .slotSelected{
-      background-color: #00cc00;
-    }
+    display: inline-block;    
+    border: 1px solid #a9a9a9;
+    padding: 5px;
   }
 
   .parkingSlotRightArea{
     width: 40%;
-    float: right;
-    .parkingArea{
-      height: 25px;
-      width: 100%;
-      border: 1px solid #000000;
-      margin: 3px 0px;
-      text-align: center;
-      background-color: #f2f2f2;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .slotOccupied{
-      background-color: #ff1a1a;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-    .slotSelected{
-      background-color: #00cc00;
+    float: right;  
+    border: 1px solid #a9a9a9;
+    padding: 5px;  
+  }
+
+  .parkingArea{
+    height: 25px;
+    width: 100%;
+    border: 1px solid #a9a9a9;
+    margin: 3px 0px;
+    text-align: center;
+    background-color: transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    .slotNumber{
+      text-align: right;
+      padding: 5px 3px 5px 0px;
+      font-size: 10px;
     }
   }
+  .slotOccupied[data-slot-type="0"]{
+    background-image: url(../../assets/imgs/bike_occupied.svg);
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+    //padding: 0px 10px;
+  }
+  .slotOccupied[data-slot-type="1"]{
+    background-image: url(../../assets/imgs/car_occupied.svg);
+    background-size: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    //padding: 0px 10px;
+  }
+
+  .slotAvailable[data-slot-type="0"]{
+    background-image: url(../../assets/imgs/bike_available.svg);
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+    //padding: 0px 10px;
+  }
+  .slotAvailable[data-slot-type="1"]{
+    background-image: url(../../assets/imgs/car_available.svg);
+    background-size: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    //padding: 0px 10px;
+  }
+
+  .slotUnavailable[data-slot-type="0"]{
+    background-image: url(../../assets/imgs/bike_unavailable.svg);
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+    //padding: 0px 10px;
+  }
+  .slotUnavailable[data-slot-type="1"]{
+    background-image: url(../../assets/imgs/car_unavailable.svg);
+    background-size: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    //padding: 0px 10px;
+  }
+
   .custom-spinner-container{
     .custom-spinner-box{
-      background-image: url(../../assets/imgs/ajaxloader.gif);
-      width: 40px;
-      height: 40px;
+      background-image: url(../../assets/imgs/ajaxloader.svg);
+      width: 60px;
+      height: 60px;
       display: block;
       background-repeat: no-repeat;
       margin:0px auto;
@@ -77,4 +110,14 @@ page-home {
   }
   .alert-message{
     overflow: auto;
+  }
+
+  .locationName{
+    font-size:15px;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .divisionName{
+    text-align: center;
   }

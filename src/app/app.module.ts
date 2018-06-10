@@ -14,7 +14,7 @@ import { SignupPage} from '../pages/signup/signup';
 import { AuthService } from '../services/auth.service';
 import { GlobalGenericService } from '../services/globalgeneric.service';
 import { NgxErrorsModule} from '@ultimate/ngxerrors';
-import { HomePage } from '../pages/home/home';
+import { HomePage, ModalContentPage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
@@ -44,7 +44,8 @@ import { DataTablesModule } from 'angular-datatables';
     ContactPage,
     SlotsPage,
     ReportsPage,
-    NotificationsPage
+    NotificationsPage,
+    ModalContentPage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +68,8 @@ import { DataTablesModule } from 'angular-datatables';
     AboutPage,
     SlotsPage,
     ReportsPage,
-    NotificationsPage
+    NotificationsPage,
+    ModalContentPage
   ],
   providers: [
     StatusBar,
