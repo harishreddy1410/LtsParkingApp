@@ -7,6 +7,12 @@ export class GlobalGenericService{
   public loggedInUser:UserProfileViewModel = new UserProfileViewModel();    
     
     constructor(private storageHelper:StorageHelper) {        
+      this.storageHelper.GetLoggedInUserFromStorage().then(
+        res =>{
+          Object.assign(this.loggedInUser,res)
+        }
+      )
+      
     }
 
     public isAdmin:boolean = true;
@@ -42,4 +48,13 @@ export class GlobalGenericService{
         userProfile = await this.storageHelper.GetLoggedInUserFromStorage()
         return userProfile;
       }
+
+       async GetLoggedInUserLocationId() {      
+        var userProfile:UserProfileViewModel;
+        await this.storageHelper.GetLoggedInUserFromStorage().then(res=>{
+          userProfile = res;
+        })
+        return userProfile.LocationId;         
+      }
+      
 }

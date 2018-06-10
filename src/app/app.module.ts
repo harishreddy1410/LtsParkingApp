@@ -27,9 +27,11 @@ import {HttpModule} from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ParkingSlotApiProvider } from '../providers/parking-slot-api/parking-slot-api';
 import { ParkingTrafficApiProvider } from '../providers/parking-traffic-api/parking-traffic-api';
+import { ParkingAreaApiProvider } from '../providers/parking-area-service/parking-service-api';
 import { IonicStorageModule } from '@ionic/storage';
 import { UserProfileApiProvider } from '../providers/user-profile-api/user-profile-api'
 import { StorageHelper } from '../helpers/StorageHelper';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { StorageHelper } from '../helpers/StorageHelper';
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig.fire),
     NgxErrorsModule,
-    HttpClientModule
+    HttpClientModule,
+    DataTablesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -81,7 +84,8 @@ import { StorageHelper } from '../helpers/StorageHelper';
     HttpClientModule,
     ParkingSlotApiProvider,
     ParkingTrafficApiProvider,
-    UserProfileApiProvider    
+    UserProfileApiProvider ,
+    ParkingAreaApiProvider   
   ]
 })
 export class AppModule {}

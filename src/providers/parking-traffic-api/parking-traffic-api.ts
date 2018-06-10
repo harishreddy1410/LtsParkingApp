@@ -19,11 +19,10 @@ export class ParkingTrafficApiProvider {
       constructor(public http: HttpClient) {
         console.log('Hello ParkingTrafficApiProvider Provider');
       }
-  // constructor(public http: HttpClient) {
-  //   console.log('Hello ParkingTrafficApiProvider Provider');
-  // }
-      GetParkingReport(fromDate:string,toDate:string){
-       return this.http.get(this.apiUrl.toString().concat("api/ParkingTraffic/Report/",fromDate.toString(),'/',toDate.toString()),this.httpOptions)
+  
+      GetParkingReport(fromDate:string,toDate:string,locationId:number){
+       return this.http.get(this.apiUrl.toString().concat("api/ParkingTraffic/Report/",
+       fromDate.toString(),'/',toDate.toString(),'/',locationId.toString()),this.httpOptions)
 
       }
 
