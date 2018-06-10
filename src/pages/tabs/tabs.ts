@@ -25,6 +25,7 @@ export class TabsPage {
   constructor(public navCtrl: NavController,
     public singleton:GlobalGenericService,
     private auth: AuthService) {
+
         if(singleton.isAdmin == true){
           this.isValid = true;
           console.log(singleton.isAdmin+' asdf');

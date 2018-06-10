@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<ion-header>
+<!-- <ion-header>
 	<ion-navbar>
-		<button ion-button menuToggle>
-			<ion-icon name="menu"></ion-icon>
-		</button>
 		<ion-title>Log in</ion-title>
 	</ion-navbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content>
+<ion-content class="Body">
+	
+	<div class="loginBody">
 	<form (ngSubmit)="login()" [formGroup]="loginForm">
-		<ion-list inset>
+		<ion-list inset color="light">
 
       <ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
 			<!-- <ion-item [ngClass]="{ invalid: emailErrors.hasError('*', ['touched', 'dirty']) }">
@@ -55,4 +54,5 @@
 			</ion-list>
 		</div>
 	</form>
+</div>
 </ion-content>
