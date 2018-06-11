@@ -94,7 +94,7 @@ this.parkingRightSlots = this.parkingDivisionsViewModel.filter(this.findRightSlo
     createParkingSlotVm.Level = 0;
     createParkingSlotVm.Location = "BLR";
     createParkingSlotVm.SequenceOrder = 6;
-    createParkingSlotVm.UserId = 8;
+    createParkingSlotVm.Id = 8;
     console.log("creating parking slot");
     this.parkingSlotApiProvider.CreateParkingSlot(createParkingSlotVm).subscribe(resp=>{
       console.log("Parking slot creation successfull");
