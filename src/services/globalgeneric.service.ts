@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { StorageHelper } from '../helpers/StorageHelper';
 import { UserProfileViewModel } from '../dto/UserProfileViewModel';
+import { HttpClient,HttpHeaders} from '@angular/common/http';
+
 @Injectable()
 export class GlobalGenericService{
 
@@ -16,7 +18,13 @@ export class GlobalGenericService{
     }
 
     public isAdmin:boolean = true;
-    public userName:string = "Aqueel Rahman";
+    //public userName:string = "Aqueel Rahman";
+    public ltsParkingApiDomain = "http://10.1.50.123:88/";
+    public httpOptions = {
+      headers: new HttpHeaders({
+        'ApiAuthToken': "4586E9EC-7CF1-4F9C-BFF4-3E626DEF9E4B"
+      })
+    };
     private officeLatitude = 12.914649;
     private officeLongitude = 77.598765;
     

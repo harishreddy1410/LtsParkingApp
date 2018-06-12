@@ -49,7 +49,7 @@ export class StorageHelper{
     ///This Method is used to get the Logged in user from Storage
     ///-----------------------------------------------------------
    async GetLoggedInUserFromStorage(){
-    
+        debugger
         //pulling object from storage
         var userProfileViewModel = new UserProfileViewModel();
          await this.storage.get('userObj').then(
@@ -61,6 +61,7 @@ export class StorageHelper{
                             }
             }
          });
+
          var tempObj =  await this.storage.get('userObj');
         if(tempObj === null)
         {
@@ -73,9 +74,11 @@ export class StorageHelper{
             );
         }
 
-         Object.assign(userProfileViewModel,tempObj);         
+         Object.assign(userProfileViewModel,tempObj);
+         debugger
          if(userProfileViewModel.Id === undefined)
-         {             
+         {
+             debugger
            await this.userProfileApiProvider.GetUserProfile(this.auth.getEmail()).subscribe(
                 res =>{
                     this.storage.set("userObj",res);

@@ -16,6 +16,7 @@ export class UserProfileApiProvider {
     })
   };
   constructor(public http: HttpClient) {
+    console.log('Hello ApiProvider Provider');
   }
 
   GetUserProfile(email:string)
