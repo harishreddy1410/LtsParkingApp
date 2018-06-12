@@ -21,7 +21,7 @@ export class UserProfileApiProvider {
 
   GetUserProfile(email:string)
   {
-      return this.http.get(this.apiUrl.concat("api/userprofile/",email),this.httpOptions);
+      return this.http.get(this.apiUrl.concat("api/userprofile/byemail/",email),this.httpOptions);
   }
       
 }

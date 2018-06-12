@@ -28,127 +28,78 @@ export class HomePage {
   // directionsDisplay = new google.maps.DirectionsRenderer;
   parkingLeftSlots:any;
   parkingRightSlots: any;
+  public parkingDivisionsViewModels = [];
+  public locationName:string = "";
+  public tempLoggedInUserId:number = 0;
+  public currentUserCompanyId:number = -1;
 
-  public parkingDivisionsViewModel = [];
-  
     constructor(public navCtrl: NavController,public alertCtrl: AlertController, 
-    public geolocation: Geolocation, public genericService : GlobalGenericService,
-  public loadingCtrl : LoadingController,
-  private parkingSlotApiProvider :ParkingSlotApiProvider,
-  public storage:Storage ,
-public auth: AuthService,
-public userProfileApiProvider:UserProfileApiProvider, public modalCtrl : ModalController) {
-        // //Store - LoggedIn User in local sqllite storage
-        // storage.get('userObj').then((val) => {
-        //         if(val=== undefined || val === null){
-        //           this.genericService.StoreUserObj();
-        //         }
-        //  });       
-
-        //  var test = this.genericService.GetLoggedInUserProfile();
-        //  debugger
-        
-this.parkingSlotApiProvider.GetLocationParkingArea(1).subscribe(res=>{    
-    Object.assign(this.parkingDivisionsViewModel,res);
-    console.log(this.parkingDivisionsViewModel);
-});
-
-//for static slots
-this.parkingDivisionsViewModel = [{Id:9,IsActive:false,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:1,Type:0,CompanyId:1,ParkingDivisionId:1},{Id:10,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:2,Type:0,CompanyId:1,ParkingDivisionId:1},{Id:11,IsActive:true,IsDeleted:false,IsOccupied:true,Level:0,Location:"",SequenceOrder:3,Type:1,CompanyId:1,ParkingDivisionId:1},{Id:12,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:4,Type:1,CompanyId:1,ParkingDivisionId:1},{Id:13,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:1,Type:0,CompanyId:1,ParkingDivisionId:2},{Id:14,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:2,Type:0,CompanyId:1,ParkingDivisionId:2},{Id:15,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:3,Type:0,CompanyId:3,ParkingDivisionId:2},{Id:16,IsActive:true,IsDeleted:false,IsOccupied:true,Level:0,Location:"",SequenceOrder:4,Type:0,CompanyId:3,ParkingDivisionId:2},{Id:17,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:1,Type:1,CompanyId:4,ParkingDivisionId:2},{Id:18,IsActive:true,IsDeleted:false,IsOccupied:true,Level:0,Location:"",SequenceOrder:2,Type:1,CompanyId:4,ParkingDivisionId:2},{Id:19,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:3,Type:1,CompanyId:5,ParkingDivisionId:2},{Id:20,IsActive:true,IsDeleted:false,IsOccupied:true,Level:0,Location:"",SequenceOrder:4,Type:1,CompanyId:5,ParkingDivisionId:2}];
-this.parkingLeftSlots = this.parkingDivisionsViewModel.filter(this.findLeftSlots);
-this.parkingRightSlots = this.parkingDivisionsViewModel.filter(this.findRightSlots);
-//end of static slots
-
-//Sample : Parking slot get call
-    this.parkingSlotApiProvider.GetAllParkingSlots().subscribe(
-      allParkingSlots => {
-        console.log("Resp 1");
-        //this.parkingSlots = allParkingSlots;
-      },
-      err => {
-        console.log("eror " + err);
-      },
-      () => { console.log("Pulling slots pull successful");}
-    );
-//Sample : Parking slot get call
-    this.parkingSlotApiProvider.GetParkingSlot(5).subscribe(
-        parkingSlotRes =>{
-          console.log("Parking slot pull successful")
-          console.log(parkingSlotRes);
-        }
-    );
-  //Sample : Parking slot update call
-    var updateParkingSlotVm = new ParkingSlotViewModel();
-    updateParkingSlotVm.Id = 10;
-    updateParkingSlotVm.IsOccupied = true;
-    
-    this.parkingSlotApiProvider.UpdateParkingSlot(updateParkingSlotVm)
-    .subscribe(data => {
-      console.log("update successful");
-      console.log(data);
-    });
-
-    var createParkingSlotVm = new ParkingSlotViewModel();
-    createParkingSlotVm.Id = 11;
-    createParkingSlotVm.IsOccupied = false;
-    createParkingSlotVm.Level = 0;
-    createParkingSlotVm.Location = "BLR";
-    createParkingSlotVm.SequenceOrder = 6;
-    createParkingSlotVm.Id = 8;
-    console.log("creating parking slot");
-    this.parkingSlotApiProvider.CreateParkingSlot(createParkingSlotVm).subscribe(resp=>{
-      console.log("Parking slot creation successfull");
-      console.log(resp);
-    });
-    
-    //Sample : Parking slot delete call
-    this.parkingSlotApiProvider.DeleteParkingSlot(12).subscribe(
-      resp =>{
-        console.log("Parking slot delete successfull");
-        console.log(resp);
-      }
-    );   
-
+                public geolocation: Geolocation, public genericService : GlobalGenericService,
+                public loadingCtrl : LoadingController,
+                private parkingSlotApiProvider :ParkingSlotApiProvider,
+                public storage:Storage ,
+                public auth: AuthService,
+                public userProfileApiProvider:UserProfileApiProvider, 
+                public modalCtrl : ModalController,
+              ) {
+  
+    }
+///Method used to update the parking slot after user actions (Occupy / release)
+    PopulateParkingLayout(locationIdParam){
+      this.parkingSlotApiProvider.GetLocationParkingArea(locationIdParam)
+      .subscribe(res=>{                   
+              Object.assign(this.parkingDivisionsViewModels,res);
+              this.parkingDivisionsViewModels = this.parkingDivisionsViewModels.sort()
+              this.tempLoggedInUserId = this.genericService.loggedInUser.Id;                  
+              this.currentUserCompanyId = this.genericService.loggedInUser.CompanyId;            
+        });
     }
 
-  ionViewDidLoad(){
-  }
 
-  // initMap() {
+    ionViewDidLoad(){      
 
-  //   var officeLocation = new google.maps.LatLng(12.9235184,77.5993086)      ;
+       this.genericService.GetLoggedInUserProfile()
+        .then((resp) => {          
+            this.locationName = resp.Location.Name;
+            return resp.LocationId;            
+        })
+        .then((resp)=>{    
+          if(resp != undefined)      
+          {            
+             this.PopulateParkingLayout(resp);
+          }
+          else
+          {
+            //refresh the page 
+            if(this.auth.authenticated === true){              
+              this.userProfileApiProvider.GetUserProfile(this.auth.getEmail())
+                              .subscribe(resp2 =>{
+                                      if(resp2 != null)
+                                      {
+                                          var userProfileResp2 = new UserProfileViewModel();
+                                          Object.assign(userProfileResp2,resp2);
+                                          this.locationName = userProfileResp2.Location.Name;
+                                         this.PopulateParkingLayout(userProfileResp2.LocationId);
+                                      }
+                            });
+            }  
+          }
+        });
+    }
 
-  //   this.map = new google.maps.Map(this.mapElement.nativeElement, {
-  //     zoom: 18,
-  //     center: officeLocation      
-  //   });
-  //   var marker = new google.maps.Marker({position:officeLocation});
-  //   marker.setMap(this.map);
-  //   var infowindow = new google.maps.InfoWindow({
-  //     content: "LTS"
-  //   });
-  //   infowindow.open(this.map,marker);
-  //   this.directionsDisplay.setMap(this.map);
-  // }
-
-  // calculateAndDisplayRoute() {
-  //   this.directionsService.route({
-  //     origin: this.start,
-  //     destination: this.end,
-  //     travelMode: 'DRIVING'
-  //   }, (response, status) => {
-  //     if (status === 'OK') {
-  //       this.directionsDisplay.setDirections(response);
-  //     } else {
-  //       window.alert('Directions request failed due to ' + status);
-  //     }
-  //   });
-  // }
-
-  showSlotDetailsModalPopup(){
-    let modal = this.modalCtrl.create(ModalContentPage);
-    modal.present();
-    //modal.onDidDismiss(()=> loader.dismiss());
+  showSlotDetailsModalPopup($event){    
+  debugger
+    if($event.currentTarget.dataset.companymatches == "true")
+    {
+        let modal = this.modalCtrl.create(ModalContentPage,{
+          slotId : $event.currentTarget.dataset.slotid,
+          currentUserId:this.genericService.loggedInUser.Id
+        });
+        modal.present();
+        //modal.onDidDismiss(()=> loader.dismiss());
+    }else{
+      alert("This parking slot belongs to other company");
+    }
   }
   findLeftSlots(value, index, aray){
     if(value.ParkingDivisionId == 1){
@@ -178,7 +129,7 @@ this.parkingRightSlots = this.parkingDivisionsViewModel.filter(this.findRightSlo
     </ion-title>
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
-        <span ion-text color="primary">Cancel</span>
+        <span ion-text color="primary">Close</span>
       </button>
     </ion-buttons>
   </ion-toolbar>
@@ -186,6 +137,7 @@ this.parkingRightSlots = this.parkingDivisionsViewModel.filter(this.findRightSlo
 <ion-content>
   <ion-list>
       <ion-item>
+
         <div class="slotDetailHeading"> Slot Id</div>: {{slotDetail.Id}}
       </ion-item>
       <ion-item>
@@ -200,36 +152,58 @@ this.parkingRightSlots = this.parkingDivisionsViewModel.filter(this.findRightSlo
       <ion-item *ngIf="slotDetail.IsOccupied === false">
       <div class="slotDetailHeading"> Expires In</div>: --:--
       </ion-item>
-      <button ion-button icon-left block clear (click)="selectSlotToOccupy($event)" *ngIf="slotDetail.IsOccupied === false">
+      <button ion-button icon-left block clear (click)="selectSlotToOccupy($event)" *ngIf="(slotDetail) ? slotDetail.IsOccupied === false : false" 
+       [disabled]="slotOccupiedByUserId > 0"
+      >
 					Occupy
-			</button>
+      </button>
+      <button ion-button icon-left block clear (click)="selectSlotToRelease($event)" *ngIf="(slotDetail) ? slotDetail.IsOccupied === true && currentId === slotOccupiedByUserId : false">
+					Release
+      </button>
+      <div>
+          <b> {{ (slotUpdateMessage) ? slotUpdateMessage : "" }}</b>
+      </div>
   </ion-list>
 </ion-content>
 `
 })
 export class ModalContentPage {
   slotDetail:any;
+
+  hrsLeft:any;
   minsLeft:any;
   secsLeft:any;
   timer:any;
+  slotId:number;
+  currentId:number = 0;
+  slotUpdateMessage:string="";
+  slotOccupiedByUserId:number = -1;
+
   @ViewChild('mins') minsElement: ElementRef;
   @ViewChild('secs') secsElement: ElementRef;
   constructor(
     public platform: Platform, public viewCtrl: ViewController, 
     public alertCtrl : AlertController,public geolocation: Geolocation, 
-    public genericService : GlobalGenericService, public loadingCtrl : LoadingController
+    public genericService : GlobalGenericService, public loadingCtrl : LoadingController,
+    public parkingSlotApiProvider:ParkingSlotApiProvider,
+    public params: NavParams,public navCtrl: NavController
   ) {
-    this.getSlotDetails();
+    this.slotId = params.get('slotId');
+    this.currentId = params.get('currentUserId');
+    this.getSlotDetails(this.slotId);
+    this.slotUpdateMessage = "";
+    
   }
 
   calculateExpirationTime(){
     let outTime = this.slotDetail.OutTime;
-    let mins,secs;
+    let hrs,mins,secs;
     this.timer = setInterval(()=> {      
       // Find the distance between now an the count down date
       var distance = new Date().getTime() - outTime.getTime();
       
-      // Time calculations for minutes and seconds      
+      // Time calculations for minutes and seconds 
+      this.hrsLeft = Math.floor((distance/60/1000/60));
       this.minsLeft = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       this.secsLeft = Math.floor((distance % (1000 * 60)) / 1000);
       //this.minsElement.value = mins;
@@ -237,21 +211,74 @@ export class ModalContentPage {
   }, 1000);
   }
 
-  getSlotDetails(){
-    this.slotDetail = {
-      Id: 1,
-      OccupiedBy: "Murugan",
-      InTime : new Date("June 10, 2018 14:00:00").toLocaleTimeString(),
-      OutTime: new Date("June 10, 2018 23:00:00"),
-      IsOccupied: false
-  };
-  this.calculateExpirationTime();
+  getSlotDetails(slotIdParam:number){
+    var tempParkingSlot = new ParkingSlotViewModel();
+        this.parkingSlotApiProvider.GetparkingSlotDetails(slotIdParam)
+        .subscribe(slotResp => {            
+            Object.assign(tempParkingSlot,slotResp);            
+            if(tempParkingSlot.IsOccupied){
+              this.slotOccupiedByUserId = tempParkingSlot.SlotOccupiedByUserId;
+            }
+            this.slotDetail = {
+                                  Id: tempParkingSlot.Id,
+                                  InTime : new Date(tempParkingSlot.InTime).toLocaleTimeString(),
+                                  OutTime: new Date(tempParkingSlot.OutTime),
+                                  IsOccupied: tempParkingSlot.IsOccupied,
+                                  CompanyName : tempParkingSlot.CompanyName,
+                                  OccupiedBy: tempParkingSlot.OccupiedBy,
+                                  CurrentUserId : this.params.get('currentUserId'),
+                                  SlotOccupiedByUserId : tempParkingSlot.SlotOccupiedByUserId
+                              };
+            this.calculateExpirationTime();
+        })
+
   }
 
   dismiss() {
     this.viewCtrl.dismiss();
   }
-
+  selectSlotToRelease($event){
+    
+    let loader = this.loadingCtrl.create({
+      spinner: 'hide',
+    content: `
+      <div class="custom-spinner-container">
+        <div class="custom-spinner-box"></div>
+        <div class="custom-spinner-text">Please wait...</div>
+      </div>`,
+    });
+    loader.present();
+    //Release slot
+    var tempParkingSlot: ParkingSlotViewModel = new ParkingSlotViewModel();
+    tempParkingSlot.Id = this.slotId;
+    tempParkingSlot.UserId = this.currentId;
+    tempParkingSlot.IsOccupied = false;
+    this.parkingSlotApiProvider.OccupyParkingSlot(tempParkingSlot)
+                                .subscribe(resp =>{                                                                   
+                                  if(resp != undefined){
+                                    this.slotUpdateMessage = resp.toString();
+                                  }
+                                  this.parkingSlotApiProvider.GetparkingSlotDetails(tempParkingSlot.Id).subscribe(resp =>{
+                                    Object.assign(tempParkingSlot,resp);
+                                    if(tempParkingSlot.IsOccupied){
+                                      this.slotOccupiedByUserId = tempParkingSlot.SlotOccupiedByUserId; 
+                                      this.currentId = this.params.get('currentUserId')      ;                                     
+                                    }
+                                    loader.dismiss();  
+                                });                                
+                                },
+                                err =>{    
+                                  //On error                             
+                                  loader.dismiss();    
+                                },
+                                () => {
+                                  //On complete 
+                                  this.navCtrl.setRoot(HomePage);
+                                }
+                              );
+    
+  }
+  
   selectSlotToOccupy(event) {
     clearInterval(this.timer);
     let loader = this.loadingCtrl.create({
@@ -262,32 +289,57 @@ export class ModalContentPage {
         <div class="custom-spinner-text">Please wait...</div>
       </div>`,
     });
-    //loader.present();
+    loader.present();
     let userLatitude;
-      let userLongitude; 
-    let confirm = this.alertCtrl.create({
-      title: 'Confirmation',
-      message: 'Do you want to occupy this slot?',
-      buttons: [
-        {
-          text: 'No',
-          handler: () => {
-            //console.log('Slot Id:'+event.target.attributes["data-slot-id"].value);
-          }
-        },
-        {
-          text: 'Yes',
-          handler: () => {
-            //console.log('Slot Id:'+event.target.attributes["data-slot-id"].value);
-          }
+    let userLongitude;       
+    this.geolocation.getCurrentPosition()
+      .then((position) => {         
+        userLatitude = position.coords.latitude;
+        userLongitude = position.coords.longitude;        
+        let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);        
+        if(event.target.className.indexOf("slotOccupied") < 0 && distance < 0.2){
+          loader.dismiss();          
+          //Occupy slot
+          var tempParkingSlot: ParkingSlotViewModel = new ParkingSlotViewModel();
+          tempParkingSlot.Id = this.slotId;
+          tempParkingSlot.UserId = this.currentId;
+          tempParkingSlot.IsOccupied = true;
+          this.parkingSlotApiProvider.OccupyParkingSlot(tempParkingSlot)
+                                      .subscribe(resp =>{                                        
+                                        if(resp != undefined){
+                                          this.slotUpdateMessage = resp.toString();
+                                        }
+                                        this.parkingSlotApiProvider.GetparkingSlotDetails(tempParkingSlot.Id).subscribe(resp =>{
+                                          Object.assign(tempParkingSlot,resp);
+                                          if(tempParkingSlot.IsOccupied){
+                                            this.slotOccupiedByUserId = tempParkingSlot.SlotOccupiedByUserId; 
+                                            this.currentId = this.params.get('currentUserId')      ;                                     
+                                          }
+                                      });},
+                                      err => console.log(err),
+                                      () => { 
+                                        //On completion 
+                                        this.navCtrl.setRoot(HomePage);
+                                      }
+                                    );
+          
         }
-      ]
-    });
+        else{
+          loader.dismiss();
+          alert.present();  
+        }
+        
+      })
+      .catch(err =>{        
+        console.log(err.toString())
+      });
+
     let alert = this.alertCtrl.create({
       title: 'Warning',
       message: 'Oops! Your distance from parking space is beyond the limit.',
       buttons: ['Close']
     });
+
     this.geolocation.getCurrentPosition().then((position) => { 
       userLatitude = position.coords.latitude;
       userLongitude = position.coords.longitude; 
@@ -302,9 +354,7 @@ export class ModalContentPage {
         loader.dismiss();
         alert.present();
 
-      }
-      
-    });
+
     
   }
 }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { ParkingSlotViewModel } from '../../dto/ParkingSlotViewModel';
+import { GlobalGenericService } from '../../services/globalgeneric.service';
+
 /*
   Generated class for the ParkingSlotApiProvider provider.
 
@@ -10,37 +12,41 @@ import { ParkingSlotViewModel } from '../../dto/ParkingSlotViewModel';
 @Injectable()
 export class ParkingSlotApiProvider {
 
-  apiUrl = "http://10.1.50.123:88/";  
-      httpOptions = {
-        headers: new HttpHeaders({
-          'ApiAuthToken': "4586E9EC-7CF1-4F9C-BFF4-3E626DEF9E4B"
-        })
-      };
-      constructor(public http: HttpClient) {
-        console.log('Hello ApiProvider Provider');
+      constructor(public http: HttpClient,private genericService:GlobalGenericService) {        
       }
       
       GetAllParkingSlots()
       {
-        return this.http.get(this.apiUrl.concat("api/ParkingSlot"),this.httpOptions);
+        return this.http.get(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot"),this.genericService.httpOptions);
       }
       GetParkingSlot(id:number)
       {
-        return this.http.get(this.apiUrl.concat("api/ParkingSlot/",id.toString()),this.httpOptions);
+        return this.http.get(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/",id.toString()),this.genericService.httpOptions);
       }
+
+      GetparkingSlotDetails(id:number){
+        return this.http.get(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/GetparkingSlotDetails/",id.toString()),this.genericService.httpOptions);
+      }
+      
       UpdateParkingSlot(parkingSlotViewModel:ParkingSlotViewModel)
       {
-        return this.http.put(this.apiUrl.concat("api/ParkingSlot/"),parkingSlotViewModel,this.httpOptions)
+        return this.http.put(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/"),parkingSlotViewModel,this.genericService.httpOptions)
       }
+     
       CreateParkingSlot(parkingSlotViewModel:ParkingSlotViewModel)
       {
-        return this.http.post(this.apiUrl.concat("api/ParkingSlot"),parkingSlotViewModel,this.httpOptions);
+        return this.http.post(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot"),parkingSlotViewModel,this.genericService.httpOptions);
       }
+      
       DeleteParkingSlot(id:number){
-        return this.http.delete(this.apiUrl.concat("api/ParkingSlot/",id.toString()),this.httpOptions);
+        return this.http.delete(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/",id.toString()),this.genericService.httpOptions);
       }
-      GetLocationParkingArea(locationId:number){
-        return this.http.get(this.apiUrl.concat("api/ParkingSlot/GetLocationParkingSlots/",locationId.toString()),this.httpOptions);
+     
+      GetLocationParkingArea(locationId:number){                
+          return this.http.get(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/GetLocationParkingSlots/",locationId.toString()),this.genericService.httpOptions);  
+      }
+      OccupyParkingSlot(parkingSlotViewModel:ParkingSlotViewModel){
+        return this.http.put(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/OccupyUnoccupySlot"),parkingSlotViewModel,this.genericService.httpOptions);
       }
 
 }

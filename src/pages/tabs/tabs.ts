@@ -30,8 +30,7 @@ export class TabsPage {
     private auth: AuthService) {
 
         if(singleton.isAdmin == true){
-          this.isValid = true;
-          console.log(singleton.isAdmin+' asdf');
+          this.isValid = true;          
         }
         singleton.StoreUserObj();    
         singleton.GetLoggedInUserProfile().then(res=>{    

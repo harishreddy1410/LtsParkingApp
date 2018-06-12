@@ -85,14 +85,12 @@ export class SlotsPage {
     }
   }
 
-  saveParkingSlot($event): void {
-    debugger
+  saveParkingSlot($event): void {    
     // Prevent default submit action
     this.parkingSlot.IsOccupied = false;
     this.parkingSlot.Level = 0;
     this.parkingSlot.ParkingDivisionId = this.parkingDivisionId;
-    this.parkingSlot.CompanyId = this.companyId;
-    debugger
+    this.parkingSlot.CompanyId = this.companyId;    
     this.parkingSlot.CreatedBy =  this.genericService.loggedInUser.Id;
     this.parkingSlotService.CreateParkingSlot(this.parkingSlot)
     .subscribe(res =>{

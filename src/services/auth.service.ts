@@ -3,18 +3,20 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import AuthProvider = firebase.auth.AuthProvider;
 
+import { Storage } from '@ionic/storage'
+
 @Injectable()
 export class AuthService {
 	private user: firebase.User;
 
-	constructor(public afAuth: AngularFireAuth) {
+	constructor(public afAuth: AngularFireAuth,public storgae:Storage) {
 		afAuth.authState.subscribe(user => {
 			this.user = user;
 		});
 	}
 
-	signInWithEmail(credentials) {
-		console.log('Sign in with email');
+	//Sign in with email
+	signInWithEmail(credentials) {		
 		return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,
 			 credentials.password);
 	}
@@ -32,15 +34,16 @@ export class AuthService {
 	}
 
 	signOut(): Promise<void> {
+		this.storgae.clear();
 		return this.afAuth.auth.signOut();
 	}
-
-	signInWithGoogle() {
-		console.log('Sign in with google');
+	//Sign in with google
+	signInWithGoogle() {		
 		return this.oauthSignIn(new firebase.auth.GoogleAuthProvider());
 	}
 
 	private oauthSignIn(provider: AuthProvider) { 
+		this.storgae.clear();
 		if (!(<any>window).cordova) {
 			return this.afAuth.auth.signInWithPopup(provider);
 		} else {
@@ -51,8 +54,7 @@ export class AuthService {
 					// You can use it to access the Google API.
 					let token = result.credential.accessToken;
 					// The signed-in user info.
-					let user = result.user;
-					console.log(token, user);
+					let user = result.user;					
 				}).catch(function(error) {
 					// Handle Errors here.
 					alert(error.message);

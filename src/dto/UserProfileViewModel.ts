@@ -1,3 +1,4 @@
+import { LocationViewModel } from '../dto/LocationViewModel';
 export class UserProfileViewModel{    
     public Id:number;
     public FirstName:string;
@@ -8,4 +9,5 @@ export class UserProfileViewModel{
     public EmployeeShiftId:number;
     public Email:string;
     public CompanyId:number;
+    public Location:LocationViewModel = new LocationViewModel();
 }
