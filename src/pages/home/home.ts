@@ -31,7 +31,8 @@ export class HomePage {
   public parkingDivisionsViewModels = [];
   public locationName:string = "";
   public tempLoggedInUserId:number = 0;
-   
+  public currentUserCompanyId:number = -1;
+
     constructor(public navCtrl: NavController,public alertCtrl: AlertController, 
                 public geolocation: Geolocation, public genericService : GlobalGenericService,
                 public loadingCtrl : LoadingController,
@@ -46,10 +47,11 @@ export class HomePage {
 ///Method used to update the parking slot after user actions (Occupy / release)
     PopulateParkingLayout(locationIdParam){
       this.parkingSlotApiProvider.GetLocationParkingArea(locationIdParam)
-      .subscribe(res=>{                       
+      .subscribe(res=>{                   
               Object.assign(this.parkingDivisionsViewModels,res);
               this.parkingDivisionsViewModels = this.parkingDivisionsViewModels.sort()
-              this.tempLoggedInUserId = this.genericService.loggedInUser.Id;                
+              this.tempLoggedInUserId = this.genericService.loggedInUser.Id;                  
+              this.currentUserCompanyId = this.genericService.loggedInUser.CompanyId;            
         });
     }
 
@@ -85,13 +87,19 @@ export class HomePage {
         });
     }
 
-  showSlotDetailsModalPopup(slotId:number){    
-    let modal = this.modalCtrl.create(ModalContentPage,{
-      slotId : slotId,
-      currentUserId:this.genericService.loggedInUser.Id
-    });
-    modal.present();
-    //modal.onDidDismiss(()=> loader.dismiss());
+  showSlotDetailsModalPopup($event){    
+  debugger
+    if($event.currentTarget.dataset.companymatches == "true")
+    {
+        let modal = this.modalCtrl.create(ModalContentPage,{
+          slotId : $event.currentTarget.dataset.slotid,
+          currentUserId:this.genericService.loggedInUser.Id
+        });
+        modal.present();
+        //modal.onDidDismiss(()=> loader.dismiss());
+    }else{
+      alert("This parking slot belongs to other company");
+    }
   }
   findLeftSlots(value, index, aray){
     if(value.ParkingDivisionId == 1){
@@ -183,6 +191,7 @@ export class ModalContentPage {
     this.currentId = params.get('currentUserId');
     this.getSlotDetails(this.slotId);
     this.slotUpdateMessage = "";
+    
   }
 
   calculateExpirationTime(){

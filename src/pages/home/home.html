@@ -65,9 +65,10 @@
           <div class="genericDivisionLayout" *ngFor="let division of parkingDivisionsViewModels">
               <div class="divisionName">{{(division.Name)}}</div>
               <div class="parkingArea" *ngFor="let parkingSlot of division.ParkingSlots" 
-                  [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':'slotAvailable'" 
+                  [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':'slotAvailable'"                   
                   [ngClass]="(parkingSlot.IsActive)?'slotUnavailable':''" 
-                  (click)="showSlotDetailsModalPopup(parkingSlot.Id)" [attr.data-slot-id]="(parkingSlot.Id)" 
+                  (click)="showSlotDetailsModalPopup($event)" [attr.data-slotid]="(parkingSlot.Id)" 
+                  [attr.data-companymatches]="(parkingSlot.CompanyId == currentUserCompanyId)"                  
                   [attr.data-slot-type]="(parkingSlot.Type)">
                   <div class="slotNumber">{{(parkingSlot.Id)}}</div> 
               </div>
@@ -75,5 +76,5 @@
           
         </div>
 
-
+        
 </ion-content>

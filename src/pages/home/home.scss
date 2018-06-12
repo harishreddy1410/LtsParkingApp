@@ -140,4 +140,7 @@ page-home {
     .genericDivisionLayout:nth-child(2){
       float: right;
     }
+    *[data-companymatches="false"]{
+      background-color: gray;
+    }
   }
