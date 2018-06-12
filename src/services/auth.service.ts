@@ -15,8 +15,8 @@ export class AuthService {
 		});
 	}
 
-	signInWithEmail(credentials) {
-		console.log('Sign in with email');
+	//Sign in with email
+	signInWithEmail(credentials) {		
 		return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,
 			 credentials.password);
 	}
@@ -37,9 +37,8 @@ export class AuthService {
 		this.storgae.clear();
 		return this.afAuth.auth.signOut();
 	}
-
-	signInWithGoogle() {
-		console.log('Sign in with google');
+	//Sign in with google
+	signInWithGoogle() {		
 		return this.oauthSignIn(new firebase.auth.GoogleAuthProvider());
 	}
 
@@ -55,8 +54,7 @@ export class AuthService {
 					// You can use it to access the Google API.
 					let token = result.credential.accessToken;
 					// The signed-in user info.
-					let user = result.user;
-					console.log(token, user);
+					let user = result.user;					
 				}).catch(function(error) {
 					// Handle Errors here.
 					alert(error.message);

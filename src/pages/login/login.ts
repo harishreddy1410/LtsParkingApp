@@ -24,6 +24,8 @@ export class LoginPage {
 		});
 	}
 
+	
+
   login() {
 		let data = this.loginForm.value;
 

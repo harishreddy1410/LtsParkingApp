@@ -17,8 +17,7 @@ export class ParkingAreaApiProvider{
         'ApiAuthToken': "4586E9EC-7CF1-4F9C-BFF4-3E626DEF9E4B"
       })
     };
-    constructor(public http: HttpClient) {
-      console.log('Hello ParkingAreaApiProvider Provider');
+    constructor(public http: HttpClient) {      
     }
 
     GetParkingLocations(){

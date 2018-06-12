@@ -66,102 +66,12 @@ export class HomePage {
            });
           }else{
             //refresh the page 
-            location.reload();            
+            if(this.auth.authenticated){
+              location.reload();          
+            }  
           }
         });
-
-
-// //for static slots
-// this.parkingDivisionsViewModels = [{Id:9,IsActive:false,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:1,Type:0,CompanyId:1,ParkingDivisionId:1},{Id:10,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:2,Type:0,CompanyId:1,ParkingDivisionId:1},{Id:11,IsActive:true,IsDeleted:false,IsOccupied:true,Level:0,Location:"",SequenceOrder:3,Type:1,CompanyId:1,ParkingDivisionId:1},{Id:12,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:4,Type:1,CompanyId:1,ParkingDivisionId:1},{Id:13,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:1,Type:0,CompanyId:1,ParkingDivisionId:2},{Id:14,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:2,Type:0,CompanyId:1,ParkingDivisionId:2},{Id:15,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:3,Type:0,CompanyId:3,ParkingDivisionId:2},{Id:16,IsActive:true,IsDeleted:false,IsOccupied:true,Level:0,Location:"",SequenceOrder:4,Type:0,CompanyId:3,ParkingDivisionId:2},{Id:17,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:1,Type:1,CompanyId:4,ParkingDivisionId:2},{Id:18,IsActive:true,IsDeleted:false,IsOccupied:true,Level:0,Location:"",SequenceOrder:2,Type:1,CompanyId:4,ParkingDivisionId:2},{Id:19,IsActive:true,IsDeleted:false,IsOccupied:false,Level:0,Location:"",SequenceOrder:3,Type:1,CompanyId:5,ParkingDivisionId:2},{Id:20,IsActive:true,IsDeleted:false,IsOccupied:true,Level:0,Location:"",SequenceOrder:4,Type:1,CompanyId:5,ParkingDivisionId:2}];
-// this.parkingLeftSlots = this.parkingDivisionsViewModels.filter(this.findLeftSlots);
-// this.parkingRightSlots = this.parkingDivisionsViewModels.filter(this.findRightSlots);
-// //end of static slots
-
-//Sample : Parking slot get call
-    this.parkingSlotApiProvider.GetAllParkingSlots().subscribe(
-      allParkingSlots => {
-        console.log("Resp 1");
-        //this.parkingSlots = allParkingSlots;
-      },
-      err => {
-        console.log("eror " + err);
-      },
-      () => { console.log("Pulling slots pull successful");}
-    );
-//Sample : Parking slot get call
-    this.parkingSlotApiProvider.GetParkingSlot(5).subscribe(
-        parkingSlotRes =>{
-          console.log("Parking slot pull successful")
-          console.log(parkingSlotRes);
-        }
-    );
-  // //Sample : Parking slot update call
-  //   var updateParkingSlotVm = new ParkingSlotViewModel();
-  //   updateParkingSlotVm.Id = 10;
-  //   updateParkingSlotVm.IsOccupied = true;
-    
-  //   this.parkingSlotApiProvider.UpdateParkingSlot(updateParkingSlotVm)
-  //   .subscribe(data => {
-  //     console.log("update successful");
-  //     console.log(data);
-  //   });
-
-    // var createParkingSlotVm = new ParkingSlotViewModel();
-    // createParkingSlotVm.Id = 11;
-    // createParkingSlotVm.IsOccupied = false;
-    // createParkingSlotVm.Level = 0;
-    // createParkingSlotVm.Location = "BLR";
-    // createParkingSlotVm.SequenceOrder = 6;
-    // createParkingSlotVm.UserId = 8;
-    // console.log("creating parking slot");
-    // this.parkingSlotApiProvider.CreateParkingSlot(createParkingSlotVm).subscribe(resp=>{
-    //   console.log("Parking slot creation successfull");
-    //   console.log(resp);
-    // });
-    
-    //Sample : Parking slot delete call
-    this.parkingSlotApiProvider.DeleteParkingSlot(12).subscribe(
-      resp =>{
-        console.log("Parking slot delete successfull");
-        console.log(resp);
-      }
-    );   
-
     }
-
-  ionViewDidLoad(){
-  }
-
-  // initMap() {
-
-  //   var officeLocation = new google.maps.LatLng(12.9235184,77.5993086)      ;
-
-  //   this.map = new google.maps.Map(this.mapElement.nativeElement, {
-  //     zoom: 18,
-  //     center: officeLocation      
-  //   });
-  //   var marker = new google.maps.Marker({position:officeLocation});
-  //   marker.setMap(this.map);
-  //   var infowindow = new google.maps.InfoWindow({
-  //     content: "LTS"
-  //   });
-  //   infowindow.open(this.map,marker);
-  //   this.directionsDisplay.setMap(this.map);
-  // }
-
-  // calculateAndDisplayRoute() {
-  //   this.directionsService.route({
-  //     origin: this.start,
-  //     destination: this.end,
-  //     travelMode: 'DRIVING'
-  //   }, (response, status) => {
-  //     if (status === 'OK') {
-  //       this.directionsDisplay.setDirections(response);
-  //     } else {
-  //       window.alert('Directions request failed due to ' + status);
-  //     }
-  //   });
-  // }
 
   showSlotDetailsModalPopup(slotId:number){    
     let modal = this.modalCtrl.create(ModalContentPage,{slotId : slotId,currentUserId:this.genericService.loggedInUser.Id});
@@ -216,7 +126,7 @@ export class HomePage {
         <b> Company </b>: {{(slotDetail) ? slotDetail.CompanyName : ""}}
       </ion-item>      
       <ion-item>
-        <b> Expected Out Time In</b>: <span #hrs>{{hrsLeft}}</span>:<span #mins>{{minsLeft}}</span>:<span #secs>{{secsLeft}}</span>
+        <b> Expected Out Time</b>: <span #hrs>{{hrsLeft}}</span>:<span #mins>{{minsLeft}}</span>:<span #secs>{{secsLeft}}</span>
       </ion-item>
       <button ion-button icon-left block clear (click)="selectSlotToOccupy($event)" *ngIf="(slotDetail) ? slotDetail.IsOccupied === false : false" 
        [disabled]="slotOccupiedByUserId > 0"
@@ -279,10 +189,8 @@ export class ModalContentPage {
   getSlotDetails(slotIdParam:number){
     var tempParkingSlot = new ParkingSlotViewModel();
         this.parkingSlotApiProvider.GetparkingSlotDetails(slotIdParam)
-        .subscribe(slotResp => {
-            debugger
-            Object.assign(tempParkingSlot,slotResp);
-            debugger
+        .subscribe(slotResp => {            
+            Object.assign(tempParkingSlot,slotResp);            
             if(tempParkingSlot.IsOccupied){
               this.slotOccupiedByUserId = tempParkingSlot.SlotOccupiedByUserId;
             }
@@ -321,8 +229,7 @@ export class ModalContentPage {
     tempParkingSlot.UserId = this.currentId;
     tempParkingSlot.IsOccupied = false;
     this.parkingSlotApiProvider.OccupyParkingSlot(tempParkingSlot)
-                                .subscribe(resp =>{     
-                                  debugger                                   
+                                .subscribe(resp =>{                                                                   
                                   if(resp != undefined){
                                     this.slotUpdateMessage = resp.toString();
                                   }
@@ -335,8 +242,7 @@ export class ModalContentPage {
                                     loader.dismiss();  
                                 });                                
                                 },
-                              err =>{
-                                console.log(err);
+                              err =>{                                
                                 loader.dismiss();    
                               }
                               );
@@ -358,10 +264,8 @@ export class ModalContentPage {
     this.geolocation.getCurrentPosition()
       .then((position) => {         
         userLatitude = position.coords.latitude;
-        userLongitude = position.coords.longitude; 
-        console.log(userLatitude + "," + userLongitude);
-        let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);
-        console.log(distance);
+        userLongitude = position.coords.longitude;        
+        let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);        
         if(event.target.className.indexOf("slotOccupied") < 0 && distance < 0.2){
           loader.dismiss();          
           //Occupy slot
@@ -391,8 +295,7 @@ export class ModalContentPage {
         }
         
       })
-      .catch(err =>{
-        debugger
+      .catch(err =>{        
         console.log(err.toString())
       });
 
