@@ -69,14 +69,14 @@ page-home {
   }
 
   .slotAvailable[data-slot-type="0"]{
-    background-image: url(../../assets/imgs/bike_available.svg);
+    background-image: url(../../assets/blocker/imgs/bike_available.svg);
     background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
     //padding: 0px 10px;
   }
   .slotAvailable[data-slot-type="1"]{
-    background-image: url(../../assets/imgs/car_available.svg);
+    background-image: url(../../assets/blocker/imgs/car_available.svg);
     background-size: 50px;
     background-repeat: no-repeat;
     background-position: center;
@@ -84,14 +84,14 @@ page-home {
   }
 
   .slotUnavailable[data-slot-type="0"]{
-    background-image: url(../../assets/imgs/bike_unavailable.svg);
+    background-image: url(../../assets/blocker/imgs/bike_unavailable.svg);
     background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
     //padding: 0px 10px;
   }
   .slotUnavailable[data-slot-type="1"]{
-    background-image: url(../../assets/imgs/car_unavailable.svg);
+    background-image: url(../../assets/blocker/imgs/car_unavailable.svg);
     background-size: 50px;
     background-repeat: no-repeat;
     background-position: center;
@@ -127,7 +127,7 @@ page-home {
     width:40%;
   }
   .LtsParkingLayout{
-    background: url(../../assets/imgs/LTS-JayanagarLayout2.png);
+    background: url(../../assets/imgsblocker//LTS-JayanagarLayout2.png);
     min-height: 460px;
     background-size: contain;
     background-repeat: no-repeat;
