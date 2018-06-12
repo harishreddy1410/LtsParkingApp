@@ -48,8 +48,7 @@ export class StorageHelper{
     ///-----------------------------------------------------------
     ///This Method is used to get the Logged in user from Storage
     ///-----------------------------------------------------------
-   async GetLoggedInUserFromStorage(){
-        debugger
+   async GetLoggedInUserFromStorage(){        
         //pulling object from storage
         var userProfileViewModel = new UserProfileViewModel();
          await this.storage.get('userObj').then(

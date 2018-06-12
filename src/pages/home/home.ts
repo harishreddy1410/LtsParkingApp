@@ -32,7 +32,6 @@ export class HomePage {
   public locationName:string = "";
   public tempLoggedInUserId:number = 0;
    
-    ionDidView
     constructor(public navCtrl: NavController,public alertCtrl: AlertController, 
                 public geolocation: Geolocation, public genericService : GlobalGenericService,
                 public loadingCtrl : LoadingController,
@@ -45,6 +44,16 @@ export class HomePage {
   
     }
 
+    PopulateParkingLayout(locationIdParam){
+      this.parkingSlotApiProvider.GetLocationParkingArea(locationIdParam)
+      .subscribe(res=>{                       
+              Object.assign(this.parkingDivisionsViewModels,res);
+              this.parkingDivisionsViewModels = this.parkingDivisionsViewModels.sort()
+              this.tempLoggedInUserId = this.genericService.loggedInUser.Id;                
+        });
+    }
+
+
     ionViewDidLoad(){      
 
        this.genericService.GetLoggedInUserProfile()
@@ -54,18 +63,13 @@ export class HomePage {
         })
         .then((resp)=>{    
           if(resp != undefined)      
+          {            
+             this.PopulateParkingLayout(resp);
+          }
+          else
           {
-            debugger
-              this.parkingSlotApiProvider.GetLocationParkingArea(resp)
-              .subscribe(res=>{                       
-                Object.assign(this.parkingDivisionsViewModels,res);
-                this.parkingDivisionsViewModels = this.parkingDivisionsViewModels.sort()
-                this.tempLoggedInUserId = this.genericService.loggedInUser.Id;                
-           });
-          }else{
             //refresh the page 
-            if(this.auth.authenticated === true){
-              debugger
+            if(this.auth.authenticated === true){              
               this.userProfileApiProvider.GetUserProfile(this.auth.getEmail())
                               .subscribe(resp2 =>{
                                       if(resp2 != null)
@@ -73,13 +77,7 @@ export class HomePage {
                                           var userProfileResp2 = new UserProfileViewModel();
                                           Object.assign(userProfileResp2,resp2);
                                           this.locationName = userProfileResp2.Location.Name;
-                                          this.parkingSlotApiProvider.GetLocationParkingArea(userProfileResp2.LocationId)
-                                                .subscribe(res=>{                       
-                                                  Object.assign(this.parkingDivisionsViewModels,res);
-                                                  this.parkingDivisionsViewModels = this.parkingDivisionsViewModels.sort()
-                                                  this.tempLoggedInUserId = this.genericService.loggedInUser.Id;
-                                                  
-                                            });
+                                         this.PopulateParkingLayout(userProfileResp2.LocationId);
                                       }
                             });
             }  
@@ -88,7 +86,10 @@ export class HomePage {
     }
 
   showSlotDetailsModalPopup(slotId:number){    
-    let modal = this.modalCtrl.create(ModalContentPage,{slotId : slotId,currentUserId:this.genericService.loggedInUser.Id});
+    let modal = this.modalCtrl.create(ModalContentPage,{
+      slotId : slotId,
+      currentUserId:this.genericService.loggedInUser.Id
+    });
     modal.present();
     //modal.onDidDismiss(()=> loader.dismiss());
   }
@@ -176,7 +177,7 @@ export class ModalContentPage {
     public alertCtrl : AlertController,public geolocation: Geolocation, 
     public genericService : GlobalGenericService, public loadingCtrl : LoadingController,
     public parkingSlotApiProvider:ParkingSlotApiProvider,
-    public params: NavParams
+    public params: NavParams,public navCtrl: NavController
   ) {
     this.slotId = params.get('slotId');
     this.currentId = params.get('currentUserId');
@@ -256,12 +257,18 @@ export class ModalContentPage {
                                     loader.dismiss();  
                                 });                                
                                 },
-                              err =>{                                
-                                loader.dismiss();    
-                              }
+                                err =>{    
+                                  //On error                             
+                                  loader.dismiss();    
+                                },
+                                () => {
+                                  //On complete 
+                                  this.navCtrl.setRoot(HomePage);
+                                }
                               );
     
   }
+  
   selectSlotToOccupy(event) {
     clearInterval(this.timer);
     let loader = this.loadingCtrl.create({
@@ -280,7 +287,7 @@ export class ModalContentPage {
         userLatitude = position.coords.latitude;
         userLongitude = position.coords.longitude;        
         let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);        
-        if(event.target.className.indexOf("slotOccupied") < 0 && distance < 0.2){
+        if(true){
           loader.dismiss();          
           //Occupy slot
           var tempParkingSlot: ParkingSlotViewModel = new ParkingSlotViewModel();
@@ -298,9 +305,13 @@ export class ModalContentPage {
                                             this.slotOccupiedByUserId = tempParkingSlot.SlotOccupiedByUserId; 
                                             this.currentId = this.params.get('currentUserId')      ;                                     
                                           }
-                                      });
-                                      
-                                      });
+                                      });},
+                                      err => console.log(err),
+                                      () => { 
+                                        //On completion 
+                                        this.navCtrl.setRoot(HomePage);
+                                      }
+                                    );
           
         }
         else{
