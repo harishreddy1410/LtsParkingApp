@@ -121,3 +121,23 @@ page-home {
   .divisionName{
     text-align: center;
   }
+
+  .genericDivisionLayout{
+    display:inline-block;
+    width:40%;
+  }
+  .LtsParkingLayout{
+    background: url(../../assets/imgs/LTS-JayanagarLayout2.png);
+    min-height: 460px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    .genericDivisionLayout:first-child{
+      position: relative;
+      top: 88px;
+      float: left;
+    }
+    .genericDivisionLayout:nth-child(2){
+      float: right;
+    }
+  }

@@ -51,9 +51,9 @@ export class GlobalGenericService{
 
        async GetLoggedInUserLocationId() {      
         var userProfile:UserProfileViewModel;
-        await this.storageHelper.GetLoggedInUserFromStorage().then(res=>{
+        await this.storageHelper.GetLoggedInUserFromStorage().then(res => {          
           userProfile = res;
-        })
+        });
         return userProfile.LocationId;         
       }
       

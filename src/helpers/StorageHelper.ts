@@ -34,10 +34,10 @@ export class StorageHelper{
     ///-----------------------------------------------------------
     ///This Method is used to store the Logged in user obect in Storage
     ///-----------------------------------------------------------
-	StoreUserProfileInStorage(){		
+    async StoreUserProfileInStorage(){		
 		if(this.auth.getEmail() !== undefined && this.auth.getEmail() !== null){
 			var userProfile:UserProfileViewModel = null;
-			this.userProfileApiProvider.GetUserProfile(this.auth.getEmail()).subscribe(
+		    await this.userProfileApiProvider.GetUserProfile(this.auth.getEmail()).subscribe(
                 res =>{
                     this.storage.set("userObj",res);
                 }
@@ -49,19 +49,40 @@ export class StorageHelper{
     ///This Method is used to get the Logged in user from Storage
     ///-----------------------------------------------------------
    async GetLoggedInUserFromStorage(){
-        
+    
         //pulling object from storage
         var userProfileViewModel = new UserProfileViewModel();
-         await this.storage.get('userObj').then((val)=>{
-            if(val === undefined || val === null){
-                if(this.auth.authenticated){
-                    //Try again
-                    this.StoreUserProfileInStorage();  
-                   
-                }}
+         await this.storage.get('userObj').then(
+             (val) => {
+                        if(val === undefined || val === null){
+                            if(this.auth.authenticated){
+                                //Try again
+                                this.StoreUserProfileInStorage();                     
+                            }
+            }
          });
          var tempObj =  await this.storage.get('userObj');
-         Object.assign(userProfileViewModel,tempObj);
+        if(tempObj === null)
+        {
+            await this.userProfileApiProvider.GetUserProfile(this.auth.getEmail())
+            .subscribe(
+                res =>{
+                    this.storage.set("userObj",res);
+                    Object.assign(userProfileViewModel,tempObj);
+                }
+            );
+        }
+
+         Object.assign(userProfileViewModel,tempObj);         
+         if(userProfileViewModel.Id === undefined)
+         {             
+           await this.userProfileApiProvider.GetUserProfile(this.auth.getEmail()).subscribe(
+                res =>{
+                    this.storage.set("userObj",res);
+                    Object.assign(userProfileViewModel,tempObj);
+                }
+            )
+         }
          return  userProfileViewModel;
     }
 

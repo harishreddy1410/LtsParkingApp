@@ -3,11 +3,13 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import AuthProvider = firebase.auth.AuthProvider;
 
+import { Storage } from '@ionic/storage'
+
 @Injectable()
 export class AuthService {
 	private user: firebase.User;
 
-	constructor(public afAuth: AngularFireAuth) {
+	constructor(public afAuth: AngularFireAuth,public storgae:Storage) {
 		afAuth.authState.subscribe(user => {
 			this.user = user;
 		});
@@ -32,6 +34,7 @@ export class AuthService {
 	}
 
 	signOut(): Promise<void> {
+		this.storgae.clear();
 		return this.afAuth.auth.signOut();
 	}
 
@@ -41,6 +44,7 @@ export class AuthService {
 	}
 
 	private oauthSignIn(provider: AuthProvider) { 
+		this.storgae.clear();
 		if (!(<any>window).cordova) {
 			return this.afAuth.auth.signInWithPopup(provider);
 		} else {
