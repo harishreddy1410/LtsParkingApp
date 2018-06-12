@@ -137,19 +137,20 @@ export class HomePage {
 <ion-content>
   <ion-list>
       <ion-item>
-        <b> Slot Id</b>: {{(slotDetail) ? slotDetail.Id : ""}}
+
+        <div class="slotDetailHeading"> Slot Id</div>: {{slotDetail.Id}}
       </ion-item>
       <ion-item>
-        <b> Occupied By</b>: {{(slotDetail) ? slotDetail.OccupiedBy : ""}}
+        <div class="slotDetailHeading"> Occupied By</div>: {{slotDetail.OccupiedBy}}
       </ion-item>
       <ion-item>
-        <b> In Time</b>: {{(slotDetail) ? slotDetail.InTime : ""}}
+        <div class="slotDetailHeading"> In Time</div>: {{slotDetail.InTime}}
       </ion-item>
-      <ion-item>
-        <b> Company </b>: {{(slotDetail) ? slotDetail.CompanyName : ""}}
-      </ion-item>      
-      <ion-item>
-        <b> Expected Out Time</b>: <span #hrs>{{hrsLeft}}</span>:<span #mins>{{minsLeft}}</span>:<span #secs>{{secsLeft}}</span>
+      <ion-item *ngIf="slotDetail.IsOccupied === true">
+      <div class="slotDetailHeading"> Expires In</div>: <span #mins>{{minsLeft}}</span>:<span #secs>{{secsLeft}}</span>
+      </ion-item>
+      <ion-item *ngIf="slotDetail.IsOccupied === false">
+      <div class="slotDetailHeading"> Expires In</div>: --:--
       </ion-item>
       <button ion-button icon-left block clear (click)="selectSlotToOccupy($event)" *ngIf="(slotDetail) ? slotDetail.IsOccupied === false : false" 
        [disabled]="slotOccupiedByUserId > 0"
@@ -199,7 +200,7 @@ export class ModalContentPage {
     let hrs,mins,secs;
     this.timer = setInterval(()=> {      
       // Find the distance between now an the count down date
-      var distance = outTime.getTime() - new Date().getTime();
+      var distance = new Date().getTime() - outTime.getTime();
       
       // Time calculations for minutes and seconds 
       this.hrsLeft = Math.floor((distance/60/1000/60));
@@ -338,6 +339,21 @@ export class ModalContentPage {
       message: 'Oops! Your distance from parking space is beyond the limit.',
       buttons: ['Close']
     });
+
+    this.geolocation.getCurrentPosition().then((position) => { 
+      userLatitude = position.coords.latitude;
+      userLongitude = position.coords.longitude; 
+      console.log(userLatitude + "," + userLongitude);
+      let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);
+      console.log(distance);
+      if(event.target.className.indexOf("slotOccupied") < 0 && distance < 1){
+        loader.dismiss();
+        confirm.present();
+      }
+      else{
+        loader.dismiss();
+        alert.present();
+
 
     
   }

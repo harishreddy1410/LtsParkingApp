@@ -122,6 +122,25 @@ page-home {
     text-align: center;
   }
 
+
+  ion-toolbar{
+    .toolbar-background{
+      color: #fff;
+    }
+    .bar-button{
+      background: rgba(255,255,255,0.6);
+    }
+    .toolbar-title{
+      color: #fff;
+    }
+  }
+
+  .slotDetailHeading{
+    display: inline-block;
+    font-weight: bold;
+    min-width: 110px;
+}
+
   .genericDivisionLayout{
     display:inline-block;
     width:40%;
@@ -143,4 +162,5 @@ page-home {
     *[data-companymatches="false"]{
       background-color: gray;
     }
+
   }
