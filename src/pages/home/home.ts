@@ -88,7 +88,6 @@ export class HomePage {
     }
 
   showSlotDetailsModalPopup($event){    
-  debugger
     if($event.currentTarget.dataset.companymatches == "true")
     {
         let modal = this.modalCtrl.create(ModalContentPage,{
@@ -138,18 +137,18 @@ export class HomePage {
   <ion-list>
       <ion-item>
 
-        <div class="slotDetailHeading"> Slot Id</div>: {{slotDetail.Id}}
+        <div class="slotDetailHeading"> Slot Id</div>: {{(slotDetail) ? slotDetail.Id : ''}}
       </ion-item>
       <ion-item>
-        <div class="slotDetailHeading"> Occupied By</div>: {{slotDetail.OccupiedBy}}
+        <div class="slotDetailHeading"> Occupied By</div>: {{(slotDetail) ? slotDetail.OccupiedBy : '' }}
       </ion-item>
       <ion-item>
-        <div class="slotDetailHeading"> In Time</div>: {{slotDetail.InTime}}
+        <div class="slotDetailHeading"> In Time</div>: {{(slotDetail) ? slotDetail.InTime : ''   }}
       </ion-item>
-      <ion-item *ngIf="slotDetail.IsOccupied === true">
+      <ion-item *ngIf="(slotDetail) ? slotDetail.IsOccupied === true : false">
       <div class="slotDetailHeading"> Expires In</div>: <span #mins>{{minsLeft}}</span>:<span #secs>{{secsLeft}}</span>
       </ion-item>
-      <ion-item *ngIf="slotDetail.IsOccupied === false">
+      <ion-item *ngIf="(slotDetail) ? slotDetail.IsOccupied === false : true">
       <div class="slotDetailHeading"> Expires In</div>: --:--
       </ion-item>
       <button ion-button icon-left block clear (click)="selectSlotToOccupy($event)" *ngIf="(slotDetail) ? slotDetail.IsOccupied === false : false" 
@@ -340,19 +339,19 @@ export class ModalContentPage {
       buttons: ['Close']
     });
 
-    this.geolocation.getCurrentPosition().then((position) => { 
-      userLatitude = position.coords.latitude;
-      userLongitude = position.coords.longitude; 
-      console.log(userLatitude + "," + userLongitude);
-      let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);
-      console.log(distance);
-      if(event.target.className.indexOf("slotOccupied") < 0 && distance < 1){
-        loader.dismiss();
-        confirm.present();
-      }
-      else{
-        loader.dismiss();
-        alert.present();
+    // this.geolocation.getCurrentPosition().then((position) => { 
+    //   userLatitude = position.coords.latitude;
+    //   userLongitude = position.coords.longitude; 
+    //   console.log(userLatitude + "," + userLongitude);
+    //   let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);
+    //   console.log(distance);
+    //   if(event.target.className.indexOf("slotOccupied") < 0 && distance < 1){
+    //     loader.dismiss();
+    //     confirm.present();
+    //   }
+    //   else{
+    //     loader.dismiss();
+    //     alert.present();
 
 
     
