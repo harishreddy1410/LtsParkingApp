@@ -11,6 +11,10 @@
         position: relative;
 }
 
+.profileHeader,.toolbar-background{
+    background: linear-gradient(#3366cc,#FFF) !important;
+}
+
 .avatar{
     height: 80px;
     width: 80px;
@@ -21,7 +25,7 @@
     display: block;
     font-size: 30px;
     padding: 20px 0px;
-    background-color: cornflowerblue;
+    background-color: #3366cc;
 }
 
 .avatarName{
@@ -29,5 +33,21 @@
     display: block;
     margin-top: 15px;
     font-size: 20px;
-    color: blue;
+    color:#3366cc;
+}
+.alert-wrapper{
+    border-radius: 15px !important;
+    .alert-head{
+        padding:15px 10px !important;
+        background: rgba(51,102,204,0.7);
+    }
+    
+    .alert-message{
+        padding: 10px 24px !important;
+        color: #000 !important;
+    }
+    
+    .alert-button-group{
+        padding: 0px !important;
+    }
 }
