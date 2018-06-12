@@ -8,7 +8,8 @@ export class GlobalGenericService{
 
   public loggedInUser:UserProfileViewModel = new UserProfileViewModel();    
     
-    constructor(private storageHelper:StorageHelper) {        
+    constructor(private storageHelper:StorageHelper) {  
+      this.StoreUserObj();
       this.storageHelper.GetLoggedInUserFromStorage().then(
         res =>{
           Object.assign(this.loggedInUser,res)

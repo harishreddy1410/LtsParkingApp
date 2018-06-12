@@ -3,7 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NavController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AuthService } from '../../services/auth.service';
+import { UserProfileApiProvider } from '../../providers/user-profile-api/user-profile-api';
 import { TabsPage } from '../tabs/tabs';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-login',
@@ -16,7 +18,9 @@ export class LoginPage {
 	constructor(
 		private navCtrl: NavController,
 		private auth: AuthService,
-		fb: FormBuilder
+		fb: FormBuilder,
+		public storage:Storage,
+		public userProfileApiProvider : UserProfileApiProvider
 	) {
 		this.loginForm = fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -39,9 +43,17 @@ export class LoginPage {
 		};
 		this.auth.signInWithEmail(credentials)
 			.then(
-				() => this.navCtrl.setRoot(TabsPage),
+				() => this.navCtrl.setRoot(HomePage),
 				error => this.loginError = error.message
-			);
+			)
+			.then( x=>{
+				if(this.auth.authenticated){
+					this.userProfileApiProvider.GetUserProfile(this.auth.getEmail())
+					.subscribe(res => {
+						this.storage.set('userObj',res);
+					});						
+				}
+		});
     }
 
   signup(){

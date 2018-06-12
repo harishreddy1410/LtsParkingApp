@@ -63,30 +63,23 @@ export class StorageHelper{
          });
 
          var tempObj =  await this.storage.get('userObj');
-        if(tempObj === null)
-        {
-            await this.userProfileApiProvider.GetUserProfile(this.auth.getEmail())
-            .subscribe(
-                res =>{
-                    this.storage.set("userObj",res);
-                    Object.assign(userProfileViewModel,tempObj);
-                }
-            );
-        }
+        
 
-         Object.assign(userProfileViewModel,tempObj);
-         debugger
+         Object.assign(userProfileViewModel,tempObj);         
          if(userProfileViewModel.Id === undefined)
-         {
-             debugger
+         {             
            await this.userProfileApiProvider.GetUserProfile(this.auth.getEmail()).subscribe(
                 res =>{
                     this.storage.set("userObj",res);
                     Object.assign(userProfileViewModel,tempObj);
                 }
             )
+            return userProfileViewModel;
          }
-         return  userProfileViewModel;
+         else
+         {
+            return  userProfileViewModel;
+         }
     }
 
 }

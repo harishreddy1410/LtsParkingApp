@@ -42,7 +42,8 @@ export class ParkingSlotApiProvider {
         return this.http.delete(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/",id.toString()),this.genericService.httpOptions);
       }
      
-      GetLocationParkingArea(locationId:number){        
+      GetLocationParkingArea(locationId:number){  
+        debugger      
           return this.http.get(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/GetLocationParkingSlots/",locationId.toString()),this.genericService.httpOptions);  
       }
       OccupyParkingSlot(parkingSlotViewModel:ParkingSlotViewModel){

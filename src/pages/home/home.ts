@@ -31,7 +31,8 @@ export class HomePage {
   public parkingDivisionsViewModels = [];
   public locationName:string = "";
   public tempLoggedInUserId:number = 0;
-  
+   
+    ionDidView
     constructor(public navCtrl: NavController,public alertCtrl: AlertController, 
                 public geolocation: Geolocation, public genericService : GlobalGenericService,
                 public loadingCtrl : LoadingController,
@@ -41,15 +42,12 @@ export class HomePage {
                 public userProfileApiProvider:UserProfileApiProvider, 
                 public modalCtrl : ModalController,
               ) {
-        // //Store - LoggedIn User in local sqllite storage
-        // storage.get('userObj').then((val) => {
-        //         if(val=== undefined || val === null){
-        //           this.genericService.StoreUserObj();
-        //         }
-        //  });               
-
   
-        this.genericService.GetLoggedInUserProfile()
+    }
+
+    ionViewDidLoad(){      
+
+       this.genericService.GetLoggedInUserProfile()
         .then((resp) => {          
             this.locationName = resp.Location.Name;
             return resp.LocationId;            
@@ -57,17 +55,33 @@ export class HomePage {
         .then((resp)=>{    
           if(resp != undefined)      
           {
+            debugger
               this.parkingSlotApiProvider.GetLocationParkingArea(resp)
               .subscribe(res=>{                       
                 Object.assign(this.parkingDivisionsViewModels,res);
                 this.parkingDivisionsViewModels = this.parkingDivisionsViewModels.sort()
-                this.tempLoggedInUserId = this.genericService.loggedInUser.Id;
-                
+                this.tempLoggedInUserId = this.genericService.loggedInUser.Id;                
            });
           }else{
             //refresh the page 
-            if(this.auth.authenticated){
-              location.reload();          
+            if(this.auth.authenticated === true){
+              debugger
+              this.userProfileApiProvider.GetUserProfile(this.auth.getEmail())
+                              .subscribe(resp2 =>{
+                                      if(resp2 != null)
+                                      {
+                                          var userProfileResp2 = new UserProfileViewModel();
+                                          Object.assign(userProfileResp2,resp2);
+                                          this.locationName = userProfileResp2.Location.Name;
+                                          this.parkingSlotApiProvider.GetLocationParkingArea(userProfileResp2.LocationId)
+                                                .subscribe(res=>{                       
+                                                  Object.assign(this.parkingDivisionsViewModels,res);
+                                                  this.parkingDivisionsViewModels = this.parkingDivisionsViewModels.sort()
+                                                  this.tempLoggedInUserId = this.genericService.loggedInUser.Id;
+                                                  
+                                            });
+                                      }
+                            });
             }  
           }
         });
