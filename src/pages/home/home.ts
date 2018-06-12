@@ -224,7 +224,7 @@ export class ModalContentPage {
     let mins,secs;
     this.timer = setInterval(()=> {      
       // Find the distance between now an the count down date
-      var distance = outTime.getTime() - new Date().getTime();
+      var distance = new Date().getTime() - outTime.getTime();
       
       // Time calculations for minutes and seconds      
       this.minsLeft = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
