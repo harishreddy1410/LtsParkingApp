@@ -43,7 +43,7 @@ export class HomePage {
               ) {
   
     }
-
+///Method used to update the parking slot after user actions (Occupy / release)
     PopulateParkingLayout(locationIdParam){
       this.parkingSlotApiProvider.GetLocationParkingArea(locationIdParam)
       .subscribe(res=>{                       
@@ -287,7 +287,7 @@ export class ModalContentPage {
         userLatitude = position.coords.latitude;
         userLongitude = position.coords.longitude;        
         let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);        
-        if(true){
+        if(event.target.className.indexOf("slotOccupied") < 0 && distance < 0.2){
           loader.dismiss();          
           //Occupy slot
           var tempParkingSlot: ParkingSlotViewModel = new ParkingSlotViewModel();
