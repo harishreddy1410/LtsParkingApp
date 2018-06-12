@@ -272,7 +272,8 @@ export class ModalContentPage {
                                 },
                                 () => {
                                   //On complete 
-                                  this.navCtrl.setRoot(HomePage);
+                                  //this.navCtrl.setRoot(HomePage);
+                                  window.location.reload();
                                 }
                               );
     
@@ -318,7 +319,8 @@ export class ModalContentPage {
                                       err => console.log(err),
                                       () => { 
                                         //On completion 
-                                        this.navCtrl.setRoot(HomePage);
+                                        //this.navCtrl.setRoot(HomePage);
+                                        window.location.reload();
                                       }
                                     );
           
