@@ -50,8 +50,8 @@ export class SlotsPage {
       locationId: [0, Validators.compose([Validators.required])],
       companyId: [0, Validators.compose([Validators.required])],
       parkingDivisionId: [0, Validators.compose([Validators.required])],
-      slotName: ['', Validators.compose([Validators.maxLength(5),Validators.minLength(1),
-        Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      //slotName: ['', Validators.compose([Validators.maxLength(5),Validators.minLength(1),
+        //Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       slotType: [-1, Validators.compose([Validators.required])],
     });
 
@@ -84,8 +84,15 @@ export class SlotsPage {
         this.parkingAreaService.GetParkingLocationCompanies(this.locationId)
                                 .subscribe(companiesRes => {
                                   Object.assign(this.locationCompanies, companiesRes)
+                                }, 
+                                err => {
+                                  console.log(err);
+                                },
+                                () => {
+                                  this.genericService.presentToast("Please select the company for this location")
                                 });
-      } 
+      }
+      
   }
 
   //Edit slot form - Populate the parking division 
@@ -96,6 +103,12 @@ export class SlotsPage {
       this.parkingSlotService.GetParkingSlotsOfDivision(this.parkingDivisionId)
                               .subscribe(respParkingSlots =>{
                                 Object.assign(this.editFormparkingSlots,respParkingSlots);
+                              }, 
+                              err => {
+                                console.log(err);
+                              },
+                              () => {
+                                this.genericService.presentToast("Parking slots are populated for the selected division")
                               })
     }else{
       this.alertCtrl.create({
@@ -120,10 +133,13 @@ export class SlotsPage {
                                   Object.assign(this.editFormLocationCompanies, companiesRes);
                                   this.editFormCompanyId = resp.CompanyId;
                                   this.editFormSlotStatus = resp.IsActive;
+                                }, 
+                                err => {
+                                  console.log(err);
                                 },
-                              err => {
-                                console.log(err);
-                              }
+                                () => {
+                                  this.genericService.presentToast("Companies are populated for the selected location")
+                                }
                             );
       } 
     }else{
@@ -142,7 +158,9 @@ export class SlotsPage {
     tempParkingSlotToUpdate.IsActive = this.editFormSlotStatus;
 
     this.parkingSlotService.UpdateParkingSlot(tempParkingSlotToUpdate).subscribe( resp => {
-      alert(resp);
+      if(resp){
+        this.genericService.presentToast("Parking slot is updated successfully")
+      }
     });
   
  }
@@ -158,6 +176,12 @@ export class SlotsPage {
                                 .subscribe(divisionsResp => {
                                   Object.assign(this.parkingDivisions,divisionsResp);                                  
                                   this.parkingDivisions = this.parkingDivisions.sort(x=>x.SequenceOrder);
+                                }, 
+                                err => {
+                                  console.log(err);
+                                },
+                                () => {
+                                  this.genericService.presentToast("Parking divisions are populated for the selected location")
                                 });
     }else{
       //To disable the slot name input
@@ -175,6 +199,7 @@ export class SlotsPage {
     this.parkingSlotService.CreateParkingSlot(this.parkingSlot)
     .subscribe(res =>{
         this.slotFormValidationMessage ="slot added successfully";
+        this.genericService.presentToast("Parking slot is created successfully");
     },
     error => {
       this.slotFormValidationMessage ="error while adding slot";

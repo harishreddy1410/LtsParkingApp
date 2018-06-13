@@ -35,28 +35,18 @@
                                         <ion-option *ngFor="let division of parkingDivisions" [value]="division.Id">{{division.Name}}</ion-option>
                                 </ion-select>
                                 </ion-item>
-                                <ion-item>
+                                <!-- <ion-item>
                                     <ion-label>Slot Name</ion-label>
                                     <ion-input  [(ngModel)]="slotName"  maxlength="4" placeholder="Enter slot name" [disabled]="parkingDivisionId==0" formControlName="slotName" type="text" required></ion-input>
-                                </ion-item>
+                                </ion-item> -->
                                 <ion-item>
                                     <ion-label>Slot Type</ion-label>
-                                    <ion-select [(ngModel)]="slotType" formControlName="slotType" [disabled]="slotName==''" required>
+                                    <ion-select [(ngModel)]="slotType" formControlName="slotType" [disabled]="parkingDivisionId <= 0" required>
                                             <ion-option [value]="-1">Select Slot Type</ion-option>
                                             <ion-option [value]="0">Two wheeler</ion-option>
                                             <ion-option [value]="1">Four wheeler</ion-option>
                                     </ion-select>
-                                </ion-item>
-                                <ion-item>
-                                    
-                                        <p *ngIf="locationId==0" [class.hide]="locationId==0"  >* Username is required</p>
-                                        <!-- <p ng-show="myForm.username.$invalid && !myForm.username.$pristine">* Username must be an email address</p>
-                                        <p ng-show="myForm.username.$error.minlength">* Username must be longer than 5 characters</p>
-                                        <p ng-show="myForm.password.$error.required">* Password is required</p>
-                                        <p ng-show="myForm.password.$error.minlength">* Password must be longer than 6 characters</p> -->
-                                    
-                            
-                                </ion-item>
+                                </ion-item>                                
                                 <ion-item>
                                     <button ion-button type="submit" [disabled]="!addSlotForm.valid || slotType == -1">Add Slot</button>
                                 </ion-item>
@@ -96,7 +86,7 @@
                                         </ion-item>
                                         <ion-item>
                                             <ion-label>Slot Status</ion-label>
-                                                <ion-toggle class="toggle toggle-ios" [(ngModel)]="editFormSlotStatus" formControlName="editFormSlotStatus"></ion-toggle>
+                                                <ion-toggle class="toggle toggle-ios" [disabled]="editFormParkingSlotId===-1" [(ngModel)]="editFormSlotStatus" formControlName="editFormSlotStatus"></ion-toggle>
                                         </ion-item>
                                         <ion-item *ngIf="editFormParkingSlotId > 0">                                                
                                              <small>{{(editFormparkingSlot) ? 'Allocated to ' + editFormparkingSlot.CompanyName : ""}}</small>
