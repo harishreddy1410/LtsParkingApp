@@ -67,7 +67,9 @@ export class GlobalGenericService{
         return userProfile.LocationId;         
       }
 
-
+      ///
+      /// Generic flash popup
+      ///
       presentToast(toastMessage) {
         let toast = this.toastCtrl.create({
           message: toastMessage,
