@@ -97,7 +97,11 @@ export class HomePage {
         modal.present();
         //modal.onDidDismiss(()=> loader.dismiss());
     }else{
-      alert("This parking slot belongs to other company");
+      this.alertCtrl.create({
+        title: 'Warning',
+        message: 'Sorry! this parking slot belongs to other company',
+        buttons: ['Close']
+      }).present();
     }
   }
   findLeftSlots(value, index, aray){
