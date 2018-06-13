@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { ParkingSlotViewModel } from '../../dto/ParkingSlotViewModel';
+import { ParkingSlotUpdateViewModel } from '../../dto/ParkingSlotUpdateViewModel'
 import { GlobalGenericService } from '../../services/globalgeneric.service';
 
 /*
@@ -28,7 +29,7 @@ export class ParkingSlotApiProvider {
         return this.http.get(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/GetparkingSlotDetails/",id.toString()),this.genericService.httpOptions);
       }
       
-      UpdateParkingSlot(parkingSlotViewModel:ParkingSlotViewModel)
+      UpdateParkingSlot(parkingSlotViewModel:ParkingSlotUpdateViewModel)
       {
         return this.http.put(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/"),parkingSlotViewModel,this.genericService.httpOptions)
       }
@@ -48,5 +49,8 @@ export class ParkingSlotApiProvider {
       OccupyParkingSlot(parkingSlotViewModel:ParkingSlotViewModel){
         return this.http.put(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/OccupyUnoccupySlot"),parkingSlotViewModel,this.genericService.httpOptions);
       }
-
+      GetParkingSlotsOfDivision(divisionId:number){
+        return this.http.get(this.genericService.ltsParkingApiDomain.concat("api/ParkingSlot/GetDivisionParkingSlots/", divisionId.toString()),this.genericService.httpOptions);
+      }
+      
 }
