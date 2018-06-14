@@ -72,8 +72,7 @@ export class GlobalGenericService{
       ///
       presentToast(toastMessage) {
         let toast = this.toastCtrl.create({
-          message: toastMessage,
-          duration: 3000,
+          message: toastMessage,         
           position: 'bottom',
           showCloseButton : true,
           closeButtonText : 'Ok'

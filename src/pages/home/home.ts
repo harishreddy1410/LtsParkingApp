@@ -12,6 +12,8 @@ import { ParkingDivisionViewModel } from '../../dto/ParkingDivisionViewModel';
 import { ParkingSlotApiProvider } from './../../providers/parking-slot-api/parking-slot-api';
 import { GlobalGenericService } from '../../services/globalgeneric.service';
 import { ParkingSlotViewModel } from '../../dto/ParkingSlotViewModel';
+import { TabsPage } from '../tabs/tabs';
+import { HomePageModule } from './home.module';
 
 //declare var google;
 
@@ -92,10 +94,39 @@ export class HomePage {
     {
         let modal = this.modalCtrl.create(ModalContentPage,{
           slotId : $event.currentTarget.dataset.slotid,
-          currentUserId:this.genericService.loggedInUser.Id
+          currentUserId:this.genericService.loggedInUser.Id,
+          currentLocationId:this.genericService.loggedInUser.LocationId
         });
         modal.present();
-        //modal.onDidDismiss(()=> loader.dismiss());
+        modal.onDidDismiss(()=> {
+          this.genericService.GetLoggedInUserProfile()
+          .then((resp) => {          
+              this.locationName = resp.Location.Name;
+              return resp.LocationId;            
+          })
+          .then((resp)=>{    
+            if(resp != undefined)      
+            {            
+               this.PopulateParkingLayout(resp);
+            }
+            else
+            {
+              //refresh the page 
+              if(this.auth.authenticated === true){              
+                this.userProfileApiProvider.GetUserProfile(this.auth.getEmail())
+                                .subscribe(resp2 =>{
+                                        if(resp2 != null)
+                                        {
+                                            var userProfileResp2 = new UserProfileViewModel();
+                                            Object.assign(userProfileResp2,resp2);
+                                            this.locationName = userProfileResp2.Location.Name;
+                                           this.PopulateParkingLayout(userProfileResp2.LocationId);
+                                        }
+                              });
+              }  
+            }
+          });
+        });
     }else{
       this.alertCtrl.create({
         title: 'Warning',
@@ -181,9 +212,10 @@ export class ModalContentPage {
   currentId:number = 0;
   slotUpdateMessage:string="";
   slotOccupiedByUserId:number = -1;
+  currentLocationId:number = -1;  
 
   @ViewChild('mins') minsElement: ElementRef;
-  @ViewChild('secs') secsElement: ElementRef;
+  @ViewChild('secs') secsElement: ElementRef;  
   constructor(
     public platform: Platform, public viewCtrl: ViewController, 
     public alertCtrl : AlertController,public geolocation: Geolocation, 
@@ -195,6 +227,7 @@ export class ModalContentPage {
     this.currentId = params.get('currentUserId');
     this.getSlotDetails(this.slotId);
     this.slotUpdateMessage = "";
+    this.currentLocationId = params.get('currentLocationId')
     
   }
 
@@ -266,18 +299,19 @@ export class ModalContentPage {
                                     if(tempParkingSlot.IsOccupied){
                                       this.slotOccupiedByUserId = tempParkingSlot.SlotOccupiedByUserId; 
                                       this.currentId = this.params.get('currentUserId')      ;                                     
-                                    }
-                                    loader.dismiss();  
+                                    }                                    
+                                    this.genericService.presentToast(this.slotUpdateMessage);                                                                                                          
+                                    
                                 });                                
                                 },
                                 err =>{    
                                   //On error                             
-                                  loader.dismiss();    
+                                  console.log(err);
                                 },
                                 () => {
-                                  //On complete 
-                                  //this.navCtrl.setRoot(HomePage);
-                                  window.location.reload();
+                                  //On complete                                   
+                                  loader.dismiss();  
+                                  this.dismiss();                                  
                                 }
                               );
     
@@ -319,12 +353,13 @@ export class ModalContentPage {
                                             this.slotOccupiedByUserId = tempParkingSlot.SlotOccupiedByUserId; 
                                             this.currentId = this.params.get('currentUserId')      ;                                     
                                           }
-                                      });},
+                                      });                                      
+                                      this.genericService.presentToast(resp);                                     
+                                    },
                                       err => console.log(err),
                                       () => { 
-                                        //On completion 
-                                        //this.navCtrl.setRoot(HomePage);
-                                        window.location.reload();
+                                        //On completion                                        
+                                        this.dismiss();                      
                                       }
                                     );
           
