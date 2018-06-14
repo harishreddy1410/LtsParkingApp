@@ -19,7 +19,7 @@
       </ion-toolbar> -->
       <div class="profileHeader">
         <div class="row avatar">
-            <div>AR</div>
+            <div>{{ (loggedInUserProfile) ? (loggedInUserProfile.FirstName)? loggedInUserProfile.FirstName[0] :"": '' }}</div>
         </div>
         <div class="row avatarName">
           <div color="primary">{{(loggedInUserProfile) ? loggedInUserProfile.FirstName +' '+ loggedInUserProfile.LastName : ""}}</div>

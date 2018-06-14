@@ -11,7 +11,7 @@
                 <ul>
                     <li>
                         <input type="radio" id="radio-1" name="radio-accordion" checked="checked" />
-                        <label for="radio-1">Title&nbsp;One</label>
+                        <label for="radio-1">Title&nbsp;One</label><!--Add new parking slot-->
                         <div class="content">
                             <form [formGroup]="addSlotForm" (submit)="saveParkingSlot($event)">                                
                                 <ion-item>
@@ -35,28 +35,18 @@
                                         <ion-option *ngFor="let division of parkingDivisions" [value]="division.Id">{{division.Name}}</ion-option>
                                 </ion-select>
                                 </ion-item>
-                                <ion-item>
+                                <!-- <ion-item>
                                     <ion-label>Slot Name</ion-label>
                                     <ion-input  [(ngModel)]="slotName"  maxlength="4" placeholder="Enter slot name" [disabled]="parkingDivisionId==0" formControlName="slotName" type="text" required></ion-input>
-                                </ion-item>
+                                </ion-item> -->
                                 <ion-item>
                                     <ion-label>Slot Type</ion-label>
-                                    <ion-select [(ngModel)]="slotType" formControlName="slotType" [disabled]="slotName==''" required>
+                                    <ion-select [(ngModel)]="slotType" formControlName="slotType" [disabled]="parkingDivisionId <= 0" required>
                                             <ion-option [value]="-1">Select Slot Type</ion-option>
                                             <ion-option [value]="0">Two wheeler</ion-option>
                                             <ion-option [value]="1">Four wheeler</ion-option>
                                     </ion-select>
-                                </ion-item>
-                                <ion-item>
-                                    
-                                        <p *ngIf="locationId==0" [class.hide]="locationId==0"  >* Username is required</p>
-                                        <!-- <p ng-show="myForm.username.$invalid && !myForm.username.$pristine">* Username must be an email address</p>
-                                        <p ng-show="myForm.username.$error.minlength">* Username must be longer than 5 characters</p>
-                                        <p ng-show="myForm.password.$error.required">* Password is required</p>
-                                        <p ng-show="myForm.password.$error.minlength">* Password must be longer than 6 characters</p> -->
-                                    
-                            
-                                </ion-item>
+                                </ion-item>                                
                                 <ion-item>
                                     <button ion-button type="submit" [disabled]="!addSlotForm.valid || slotType == -1">Add Slot</button>
                                 </ion-item>
@@ -70,8 +60,48 @@
                     </li>
                     <li>
                         <input type="radio" id="radio-2" name="radio-accordion" />
-                        <label for="radio-2">Title&nbsp;Two</label>
+                        <label for="radio-2">Title&nbsp;Two</label><!--Remove / re assign parking slot-->
                         <div class="content">
+                                <form [formGroup]="editSlotForm" (submit)="updateParkingSlot($event)"> 
+                                        <ion-item>
+                                            <ion-label>Location</ion-label>
+                                            <ion-select [(ngModel)]="locationId" formControlName="locationId" (ionChange)="PopulateLocationDivisions($event)" required>
+                                                    <ion-option [value]="0">Select Location</ion-option>
+                                                    <ion-option *ngFor="let location of parkingLocations" [value]="location.Id">{{location.Name}}</ion-option>
+                                            </ion-select>
+                                        </ion-item>
+                                        <ion-item>                        
+                                            <ion-label>Parking Divisions</ion-label>
+                                            <ion-select [disabled]="locationId==0" [(ngModel)]="parkingDivisionId" (ionChange)="PopulateDivisionSlots($event)" formControlName="parkingDivisionId" aria-required="true">
+                                                    <ion-option [value]="0">Select Parking Division</ion-option>
+                                                    <ion-option *ngFor="let division of parkingDivisions" [value]="division.Id">{{division.Name}}</ion-option>
+                                            </ion-select>
+                                        </ion-item>
+                                        <ion-item>
+                                            <ion-label>Parking Slots</ion-label>
+                                            <ion-select [(ngModel)]="editFormParkingSlotId"  [disabled]="parkingDivisionId==0" (ionChange)="PopulateSlotDetail(editFormParkingSlotId)" aria-required="true" formControlName="editFormParkingSlotId">
+                                                    <ion-option [value]="-1">Select Parking Slot</ion-option>
+                                                    <ion-option *ngFor="let slot of editFormparkingSlots" [value]="slot.Id">{{(slot)? 'Slot ' + slot.Id + ' - '+ slot.CompanyName : ''}}</ion-option>
+                                            </ion-select>
+                                        </ion-item>
+                                        <ion-item>
+                                            <ion-label>Slot Status</ion-label>
+                                                <ion-toggle class="toggle toggle-ios" [disabled]="editFormParkingSlotId===-1" [(ngModel)]="editFormSlotStatus" formControlName="editFormSlotStatus"></ion-toggle>
+                                        </ion-item>
+                                        <ion-item *ngIf="editFormParkingSlotId > 0">                                                
+                                             <small>{{(editFormparkingSlot) ? 'Allocated to ' + editFormparkingSlot.CompanyName : ""}}</small>
+                                        </ion-item>
+                                        <ion-item>
+                                            <ion-label>Slot Owner</ion-label>                                                                                
+                                            <ion-select [(ngModel)]="editFormCompanyId" [disabled]="editFormParkingSlotId<=0" formControlName="editFormCompanyId" aria-required="true">
+                                                    <ion-option [value]="-1">Select Company</ion-option>
+                                                    <ion-option *ngFor="let company of editFormLocationCompanies" [value]="company.Id">{{company.Name}}</ion-option>
+                                            </ion-select>
+                                    </ion-item>
+                                    <ion-item>
+                                            <button ion-button type="submit" [disabled]="!editSlotForm.valid || editFormCompanyId == -1">Update Slot</button>
+                                        </ion-item>
+                                </form>
                               </div>
                     </li>
                     <li>

@@ -21,7 +21,7 @@ export class LoginPage {
 		fb: FormBuilder,
 		public storage:Storage,
 		public userProfileApiProvider : UserProfileApiProvider
-	) {
+	) {		
 		this.loginForm = fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]

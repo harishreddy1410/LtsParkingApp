@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { StorageHelper } from '../helpers/StorageHelper';
 import { UserProfileViewModel } from '../dto/UserProfileViewModel';
 import { HttpClient,HttpHeaders} from '@angular/common/http';
+import { ToastController } from 'ionic-angular';
 
 @Injectable()
 export class GlobalGenericService{
 
   public loggedInUser:UserProfileViewModel = new UserProfileViewModel();    
     
-    constructor(private storageHelper:StorageHelper) {  
+    constructor(private storageHelper:StorageHelper,private toastCtrl: ToastController) {  
       this.StoreUserObj();
       this.storageHelper.GetLoggedInUserFromStorage().then(
         res =>{
@@ -64,6 +65,25 @@ export class GlobalGenericService{
           userProfile = res;
         });
         return userProfile.LocationId;         
+      }
+
+      ///
+      /// Generic flash popup
+      ///
+      presentToast(toastMessage) {
+        let toast = this.toastCtrl.create({
+          message: toastMessage,
+          duration: 3000,
+          position: 'bottom',
+          showCloseButton : true,
+          closeButtonText : 'Ok'
+        });
+      
+        toast.onDidDismiss(() => {
+          console.log('Dismissed toast');
+        });
+      
+        toast.present();
       }
       
 }
