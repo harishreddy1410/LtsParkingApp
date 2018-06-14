@@ -27,40 +27,48 @@ page-home {
   .parkingSlotLeftArea{
     width:40%;
     display: inline-block;    
-    border: 1px solid #a9a9a9;
+    //border: 1px solid #a9a9a9;
     padding: 5px;
+    .parkingArea:last-child{
+      border-bottom: 5px solid rgba(255,255,255,0.6);
+    }
   }
 
   .parkingSlotRightArea{
     width: 40%;
     float: right;  
-    border: 1px solid #a9a9a9;
+    //border: 1px solid #a9a9a9;
     padding: 5px;  
+    .parkingArea:last-child{
+      border-bottom: 5px solid rgba(255,255,255,0.6);
+    }
   }
 
   .parkingArea{
-    height: 25px;
+    height: 35px;
     width: 100%;
-    border: 1px solid #a9a9a9;
+    //border: 1px solid #a9a9a9;
+    border-top: 5px solid rgba(255,255,255,0.6);
     margin: 3px 0px;
     text-align: center;
     background-color: transparent;
-    border-radius: 5px;
+    //border-radius: 5px;
     cursor: pointer;
     .slotNumber{
       text-align: right;
       padding: 5px 3px 5px 0px;
       font-size: 10px;
+      color:#fff;
     }
   }
-  .slotOccupied[data-slot-type="0"]{
+  .slotOccupied[data-slot-type="TwoWheeler"]{
     background-image: url(../../assets/imgs/bike_occupied.svg);
     background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
     //padding: 0px 10px;
   }
-  .slotOccupied[data-slot-type="1"]{
+  .slotOccupied[data-slot-type="FourWheeler"]{
     background-image: url(../../assets/imgs/car_occupied.svg);
     background-size: 50px;
     background-repeat: no-repeat;
@@ -68,14 +76,14 @@ page-home {
     //padding: 0px 10px;
   }
 
-  .slotAvailable[data-slot-type="0"]{
+  .slotAvailable[data-slot-type="TwoWheeler"]{
     background-image: url(../../assets/blocker/imgs/bike_available.svg);
     background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
     //padding: 0px 10px;
   }
-  .slotAvailable[data-slot-type="1"]{
+  .slotAvailable[data-slot-type="FourWheeler"]{
     background-image: url(../../assets/blocker/imgs/car_available.svg);
     background-size: 50px;
     background-repeat: no-repeat;
@@ -83,14 +91,14 @@ page-home {
     //padding: 0px 10px;
   }
 
-  .slotUnavailable[data-slot-type="0"]{
+  .slotUnavailable[data-slot-type="TwoWheeler"]{
     background-image: url(../../assets/blocker/imgs/bike_unavailable.svg);
     background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
     //padding: 0px 10px;
   }
-  .slotUnavailable[data-slot-type="1"]{
+  .slotUnavailable[data-slot-type="FourWheeler"]{
     background-image: url(../../assets/blocker/imgs/car_unavailable.svg);
     background-size: 50px;
     background-repeat: no-repeat;
@@ -120,6 +128,7 @@ page-home {
 
   .divisionName{
     text-align: center;
+    color:#fff;
   }
 
 
@@ -146,9 +155,9 @@ page-home {
     width:40%;
   }
   .LtsParkingLayout{
-    background: url(../../assets/imgs/blocker/LTS-JayanagarLayout2.png);
+    background: url(../../assets/imgs/parkingarea.png);
     min-height: 460px;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
     .genericDivisionLayout:first-child{
