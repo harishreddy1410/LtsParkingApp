@@ -29,7 +29,7 @@ page-home {
     }
     .nbParkingLayout .parkingArea {
       max-width: 50px;
-      border-top: 1px solid rgba(255, 255, 255, 0.6);
+      border-top: 1px solid rgb(228, 243, 8);
       
     }
     .nbParkingLayout .parkingArea .slotNumber{
@@ -89,7 +89,7 @@ page-home {
       max-width: 50px;
       display: inline-block;
       height: 35px;
-      border-right: 1px solid rgba(255, 255, 255, 0.6);
+      border-right: 1px solid rgb(228, 243, 8);
       border-top: none;
     }
     .nbParkingLayout .genericDivisionLayout:nth-child(4)
@@ -126,7 +126,6 @@ page-home {
       background-size: 60px;
       background-repeat: no-repeat;
       background-position: center;
-      border: none;
     }
     .nbParkingLayout .slotAvailable[data-slot-type="1"]{
       background-image: url(../../assets/imgs/chicago/parkingavilable.png);
@@ -331,7 +330,7 @@ page-home {
     }
     .nbParkingLayout .parkingArea {
       max-width: 50px;
-      border-top: 1px solid rgba(255, 255, 255, 0.6);
+      border-top: 1px solid rgb(228, 243, 8);
       
     }
     .nbParkingLayout .parkingArea .slotNumber{
@@ -391,7 +390,7 @@ page-home {
       max-width: 50px;
       display: inline-block;
       height: 35px;
-      border-right: 1px solid rgba(255, 255, 255, 0.6);
+      border-right: 1px solid rgb(228, 243, 8);
       border-top: none;
     }
     .nbParkingLayout .genericDivisionLayout:nth-child(4)
@@ -428,7 +427,6 @@ page-home {
       background-size: 60px;
       background-repeat: no-repeat;
       background-position: center;
-      border: none;
     }
     .nbParkingLayout .slotAvailable[data-slot-type="1"]{
       background-image: url(../../assets/imgs/chicago/parkingavilable.png);
