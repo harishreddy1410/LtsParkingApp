@@ -15,17 +15,17 @@
         </ion-item>
         <ion-item>    
             <ion-label stacked>Email Subject</ion-label>        
-            <ion-input [(ngModel)]="contactEmailSubject" [value]="contactEmailSubject" formControlName="contactEmailSubject"></ion-input>
+            <ion-input [(ngModel)]="contactEmailSubject" placeholder="Enter email subject" [value]="contactEmailSubject" formControlName="contactEmailSubject"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label color="primary" stacked>Email Description</ion-label>
-            <ion-textarea rows="5" [(ngModel)]="contactEmailDescription" [value]="contactEmailDescription" formControlName="contactEmailDescription"></ion-textarea>
+            <ion-textarea rows="5" placeholder="Enter email description" [(ngModel)]="contactEmailDescription" [value]="contactEmailDescription" formControlName="contactEmailDescription"></ion-textarea>
         </ion-item>
         
               
         <div class="submitContactBtn">
             <ion-item>
-            <button ion-button type="submit" full [disabled]="!contactusForm.valid" color="primary">Submit</button>
+            <button ion-button type="submit" [disabled]="!contactusForm.valid" >Submit</button>
         </ion-item>
         </div>
   </form>

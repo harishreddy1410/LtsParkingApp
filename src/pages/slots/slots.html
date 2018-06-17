@@ -7,11 +7,16 @@
   </ion-header>
 
 <ion-content>
+    <style>
+        #divManageParkingArea ion-icon{
+            float: right;
+        }
+    </style>
         <div id="divManageParkingArea" class="accordion vertical">
                 <ul>
                     <li>
                         <input type="radio" id="radio-1" name="radio-accordion" checked="checked" />
-                        <label for="radio-1">Title&nbsp;One</label><!--Add new parking slot-->
+                        <label for="radio-1">Add new parking slot <ion-icon  name="arrow-dropdown"></ion-icon></label><!--Add new parking slot-->
                         <div class="content">
                             <form [formGroup]="addSlotForm" (submit)="saveParkingSlot($event)">                                
                                 <ion-item>
@@ -60,7 +65,7 @@
                     </li>
                     <li>
                         <input type="radio" id="radio-2" name="radio-accordion" />
-                        <label for="radio-2">Title&nbsp;Two</label><!--Remove / re assign parking slot-->
+                        <label for="radio-2">Manage parking slots<ion-icon name="arrow-dropdown"></ion-icon></label><!--Remove / re assign parking slot-->
                         <div class="content">
                                 <form [formGroup]="editSlotForm" (submit)="updateParkingSlot($event)"> 
                                         <ion-item>
@@ -103,19 +108,7 @@
                                         </ion-item>
                                 </form>
                               </div>
-                    </li>
-                    <li>
-                        <input type="radio" id="radio-3" name="radio-accordion" />
-                        <label for="radio-3">Title&nbsp;Three</label>
-                        <div class="content">
-                            </div>
-                    </li>
-                    <li>
-                        <input type="radio" id="radio-4" name="radio-accordion" />
-                        <label for="radio-4">Title&nbsp;Four</label>
-                        <div class="content">
-                             </div>
-                    </li>
+                    </li>                    
                 </ul>
             </div>
 </ion-content>
