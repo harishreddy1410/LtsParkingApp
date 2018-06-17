@@ -20,6 +20,7 @@ export class TabsPage {
   @ViewChild("content")rootElement : ElementRef;
   isValid = false;
   loggedInUserProfile:UserProfileViewModel = new UserProfileViewModel();
+
   homeRoot = HomePage;
   aboutRoot = AboutPage;
   contactRoot = ContactPage;
@@ -27,19 +28,32 @@ export class TabsPage {
   reportsRoot = ReportsPage;
 
   constructor(public navCtrl: NavController,public menuCtrl: MenuController,
-    public singleton:GlobalGenericService,
+    public genericService:GlobalGenericService,
     private auth: AuthService) {
 
-        if(singleton.isAdmin == true){
+        if(genericService.isAdmin == true){
           this.isValid = true;          
         }
-        singleton.StoreUserObj();
-        singleton.GetLoggedInUserProfile().then(res=>{            
+        genericService.StoreUserObj();
+        genericService.GetLoggedInUserProfile().then(res=>{            
           if(!isUndefined(res) && !isUndefined(res.Id) && res.Id > 0)  {            
             Object.assign(this.loggedInUserProfile, res);
-            Object.assign(this.singleton.loggedInUser,res);
+            Object.assign(this.genericService.loggedInUser,res);
+          }
+          return this.loggedInUserProfile;
+        }).then((resp2) => {
+          if(isUndefined(resp2.Id)){
+            genericService.GetLoggedInUserProfile().then(res=>{            
+              if(!isUndefined(res) && !isUndefined(res.Id) && res.Id > 0)  {            
+                Object.assign(this.loggedInUserProfile, res);
+                Object.assign(this.genericService.loggedInUser,res);
+              }
+              return this.loggedInUserProfile;
+            });
           }
         });
+        debugger
+        var test = this.loggedInUserProfile;
       }  
   
   GotoSlots(){    
