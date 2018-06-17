@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <ion-header>
   <ion-navbar>
-    
+      <br>
+        testststts 
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
-      <ion-label color="primary" floating>Email</ion-label>
-      <ion-input></ion-input>
-  </ion-item>
-  <ion-item>
-      <ion-label color="primary" floating>Subject</ion-label>
-      <ion-input></ion-input>
-  </ion-item>
-  <ion-item>
-      <ion-label color="primary" floating>Description</ion-label>
-      <ion-textarea rows="5"></ion-textarea>
-  </ion-item>
-  <div class="submitContactBtn">
-      <button ion-button color="primary">Submit</button>
-  </div>
+        
+    <form [formGroup]="contactusForm" (submit)="SubmitContactForm()" >
+        <ion-item>
+            <label>Give Us A Shout</label>
+
+        </ion-item>
+        <ion-item>    
+            <ion-label stacked>Email Subject</ion-label>        
+            <ion-input [(ngModel)]="contactEmailSubject" [value]="contactEmailSubject" formControlName="contactEmailSubject"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary" stacked>Email Description</ion-label>
+            <ion-textarea rows="5" [(ngModel)]="contactEmailDescription" [value]="contactEmailDescription" formControlName="contactEmailDescription"></ion-textarea>
+        </ion-item>
+        
+              
+        <div class="submitContactBtn">
+            <ion-item>
+            <button ion-button type="submit" full [disabled]="!contactusForm.valid" color="primary">Submit</button>
+        </ion-item>
+        </div>
+  </form>
   
 </ion-content>

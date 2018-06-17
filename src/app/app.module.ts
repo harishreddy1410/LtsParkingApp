@@ -32,6 +32,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { UserProfileApiProvider } from '../providers/user-profile-api/user-profile-api'
 import { StorageHelper } from '../helpers/StorageHelper';
 import { DataTablesModule } from 'angular-datatables';
+import { CommunicationServiceApiProvider } from '../providers/communication-api/communication-api';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { DataTablesModule } from 'angular-datatables';
     ParkingSlotApiProvider,
     ParkingTrafficApiProvider,
     UserProfileApiProvider ,
-    ParkingAreaApiProvider   
+    ParkingAreaApiProvider  ,
+    CommunicationServiceApiProvider 
   ]
 })
 export class AppModule {}
