@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NavController } from 'ionic-angular';
+import { NavController,Tabs, Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AuthService } from '../../services/auth.service';
 import { UserProfileApiProvider } from '../../providers/user-profile-api/user-profile-api';
@@ -20,12 +20,13 @@ export class LoginPage {
 		private auth: AuthService,
 		fb: FormBuilder,
 		public storage:Storage,
-		public userProfileApiProvider : UserProfileApiProvider
+		public userProfileApiProvider : UserProfileApiProvider,
+		public platform:Platform
 	) {		
 		this.loginForm = fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],
 			password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
-		});
+		});		
 	}
 
 	
@@ -43,7 +44,7 @@ export class LoginPage {
 		};
 		this.auth.signInWithEmail(credentials)
 			.then(
-				() => this.navCtrl.setRoot(HomePage),
+				() =>  this.platform.ready().then(()=> this.navCtrl.setRoot(HomePage)),
 				error => this.loginError = error.message
 			)
 			.then( x=>{
@@ -56,6 +57,7 @@ export class LoginPage {
 		});
     }
 
+		//Sign up not implemented yet
   signup(){
     //this.navCtrl.push(SignupPage);
   }

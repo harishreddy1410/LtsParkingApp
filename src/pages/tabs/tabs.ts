@@ -12,6 +12,7 @@ import { NavController,MenuController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { UserProfileViewModel } from '../../dto/UserProfileViewModel';
 import { isUndefined } from 'ionic-angular/util/util';
+import { UserProfileApiProvider } from '../../providers/user-profile-api/user-profile-api';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -29,32 +30,41 @@ export class TabsPage {
 
   constructor(public navCtrl: NavController,public menuCtrl: MenuController,
     public genericService:GlobalGenericService,
-    private auth: AuthService) {
+    private auth: AuthService,
+    public userProfileApiProvider:UserProfileApiProvider
+  ) {
 
         if(genericService.isAdmin == true){
           this.isValid = true;          
         }
         genericService.StoreUserObj();
-        genericService.GetLoggedInUserProfile().then(res=>{            
-          if(!isUndefined(res) && !isUndefined(res.Id) && res.Id > 0)  {            
+        
+      } 
+
+      //loading the tabs content after view is loaded
+      ionViewDidLoad(){
+        this.genericService.GetLoggedInUserProfile()
+        .then(res=>{  
+          if(!isUndefined(res) && !isUndefined(res.Id) && res.Id > 0)  
+          {            
             Object.assign(this.loggedInUserProfile, res);
             Object.assign(this.genericService.loggedInUser,res);
           }
           return this.loggedInUserProfile;
-        }).then((resp2) => {
+        })
+        .then((resp2) => {
+          //Fall back if the storage is not ready/not found
           if(isUndefined(resp2.Id)){
-            genericService.GetLoggedInUserProfile().then(res=>{            
-              if(!isUndefined(res) && !isUndefined(res.Id) && res.Id > 0)  {            
-                Object.assign(this.loggedInUserProfile, res);
-                Object.assign(this.genericService.loggedInUser,res);
-              }
-              return this.loggedInUserProfile;
-            });
+            if(this.auth.authenticated && !isUndefined(this.auth.getEmail()))
+            {
+              this.userProfileApiProvider.GetUserProfile(this.auth.getEmail())
+              .subscribe(resp3 =>{
+                  Object.assign(this.loggedInUserProfile,resp3);
+              })
+            }
           }
         });
-        debugger
-        var test = this.loggedInUserProfile;
-      }  
+      } 
   
   GotoSlots(){    
      this.rootElement["root"] = this.slotsRoot;

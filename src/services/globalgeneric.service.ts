@@ -3,13 +3,16 @@ import { StorageHelper } from '../helpers/StorageHelper';
 import { UserProfileViewModel } from '../dto/UserProfileViewModel';
 import { HttpClient,HttpHeaders} from '@angular/common/http';
 import { ToastController } from 'ionic-angular';
+import { isUndefined } from 'ionic-angular/util/util';
 
 @Injectable()
 export class GlobalGenericService{
 
   public loggedInUser:UserProfileViewModel = new UserProfileViewModel();    
     
-    constructor(private storageHelper:StorageHelper,private toastCtrl: ToastController) {  
+    constructor(private storageHelper:StorageHelper,
+      private toastCtrl: ToastController     
+    ) {  
       this.StoreUserObj();
       this.storageHelper.GetLoggedInUserFromStorage().then(
         res =>{
@@ -55,8 +58,14 @@ export class GlobalGenericService{
 
       async GetLoggedInUserProfile() {
         var userProfile:UserProfileViewModel;
-        userProfile = await this.storageHelper.GetLoggedInUserFromStorage();        
+        userProfile = await this.storageHelper.GetLoggedInUserFromStorage();              
         this.loggedInUser = userProfile;
+        if(isUndefined(this.loggedInUser.Id))
+        {
+          this.storageHelper.doAdelay();
+          userProfile = await this.storageHelper.GetLoggedInUserFromStorage();              
+          this.loggedInUser = userProfile;         
+        } 
         return userProfile;
       }
 
