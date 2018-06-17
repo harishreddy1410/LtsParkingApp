@@ -11,7 +11,7 @@
 	<form (ngSubmit)="login()" [formGroup]="loginForm">
 		<ion-list inset color="light">
 
-      <ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
+      <ion-input type="text" placeholder="Please enter email" formControlName="email"></ion-input>
 			<!-- <ion-item [ngClass]="{ invalid: emailErrors.hasError('*', ['touched', 'dirty']) }">
 				<ion-input type="text" placeholder="Email" formControlName="email"></ion-input>
 			</ion-item> -->
@@ -19,7 +19,7 @@
 			<!-- <div ngxErrors="email" #emailErrors="ngxErrors">
 				<div [ngxError]="['email', 'required']" [when]="['touched', 'dirty']">It should be a valid email</div>
 			</div> -->
-      <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+      <ion-input type="password" placeholder="Please enter password" formControlName="password"></ion-input>
 			<!-- <ion-item [ngClass]="{ invalid: passwordErrors.hasError('*', ['touched']) }">
 				<ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
 			</ion-item> -->
