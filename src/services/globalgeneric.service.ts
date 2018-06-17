@@ -55,7 +55,8 @@ export class GlobalGenericService{
 
       async GetLoggedInUserProfile() {
         var userProfile:UserProfileViewModel;
-        userProfile = await this.storageHelper.GetLoggedInUserFromStorage()
+        userProfile = await this.storageHelper.GetLoggedInUserFromStorage();        
+        this.loggedInUser = userProfile;
         return userProfile;
       }
 

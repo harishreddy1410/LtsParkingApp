@@ -53,7 +53,7 @@ export class HomePage {
       .subscribe(res=>{           
               Object.assign(this.parkingDivisionsViewModels,res);
               this.parkingDivisionsViewModels = this.parkingDivisionsViewModels.sort()
-              if(this.genericService.loggedInUser.Id !== undefined)
+              if(!isUndefined(this.genericService.loggedInUser.Id) && this.genericService.loggedInUser.Id > 0)
               {
                 this.tempLoggedInUserId = this.genericService.loggedInUser.Id;                       
                 this.currentUserCompanyId = this.genericService.loggedInUser.CompanyId; 
@@ -66,11 +66,14 @@ export class HomePage {
 
        this.genericService.GetLoggedInUserProfile()
         .then((resp) => {
-          if(!isUndefined(resp))          
+          if(!isUndefined(resp) && !isUndefined(resp.Id))    {      
             this.locationName = resp.Location.Name;
             this.currentUserCompanyId = resp.CompanyId;
             this.tempLoggedInUserId = resp.Id;
-            return resp.LocationId;            
+            return resp.LocationId;  
+          }else{
+            return undefined;
+          }          
         })
         .then((resp)=>{    
           if(!isUndefined(resp)      )

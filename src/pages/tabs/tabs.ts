@@ -11,6 +11,7 @@ import { NotificationsPage } from '../notifications/notificaitons';
 import { NavController,MenuController } from 'ionic-angular';
 import { AuthService } from '../../services/auth.service';
 import { UserProfileViewModel } from '../../dto/UserProfileViewModel';
+import { isUndefined } from 'ionic-angular/util/util';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -32,9 +33,12 @@ export class TabsPage {
         if(singleton.isAdmin == true){
           this.isValid = true;          
         }
-        singleton.StoreUserObj();    
-        singleton.GetLoggedInUserProfile().then(res=>{    
-          this.loggedInUserProfile = res;
+        singleton.StoreUserObj();
+        singleton.GetLoggedInUserProfile().then(res=>{            
+          if(!isUndefined(res) && !isUndefined(res.Id) && res.Id > 0)  {            
+            Object.assign(this.loggedInUserProfile, res);
+            Object.assign(this.singleton.loggedInUser,res);
+          }
         });
       }  
   
@@ -59,7 +63,6 @@ export class TabsPage {
   }
   GotoContact(){
     this.rootElement["root"]=this.contactRoot;
-    this.menuCtrl.close();
-    ;
+    this.menuCtrl.close();    
   }
 }
