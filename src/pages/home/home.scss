@@ -17,6 +17,9 @@ page-home {
       background-repeat: no-repeat;
       background-position: bottom;
       height: 100%;
+      *[data-companymatches="false"]{
+        background-color: chocolate;
+      }
     }
   
     .nbParkingLayout img{
@@ -303,6 +306,7 @@ page-home {
     *[data-companymatches="false"]{
       background-color: gray;
     }
+  }
 
     //---------Chicago office design - start -----------------//
     
@@ -315,6 +319,9 @@ page-home {
       background-repeat: no-repeat;
       background-position: bottom;
       height: 100%;
+      *[data-companymatches="false"]{
+        background-color: chocolate;
+      }
     }
   
     .nbParkingLayout img{
@@ -429,4 +436,3 @@ page-home {
     }
     //---------Chicago office design - end -----------------//
 
-  }
