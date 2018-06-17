@@ -41,6 +41,14 @@ export class TabsPage {
         
       } 
 
+      //This method is used to check the logged in usser role and change the flag value to access tabs
+      CheckRole(userProfileViewModel:UserProfileViewModel){
+        if(!isUndefined(userProfileViewModel) && !isUndefined(userProfileViewModel.Role) && userProfileViewModel.Role == 0)
+            {
+              this.genericService.isAdmin = true;
+              this.isValid = true;
+            }
+      }
       //loading the tabs content after view is loaded
       ionViewDidLoad(){
         this.genericService.GetLoggedInUserProfile()
@@ -49,6 +57,7 @@ export class TabsPage {
           {            
             Object.assign(this.loggedInUserProfile, res);
             Object.assign(this.genericService.loggedInUser,res);
+            this.CheckRole(this.genericService.loggedInUser);          
           }
           return this.loggedInUserProfile;
         })
@@ -60,6 +69,8 @@ export class TabsPage {
               this.userProfileApiProvider.GetUserProfile(this.auth.getEmail())
               .subscribe(resp3 =>{
                   Object.assign(this.loggedInUserProfile,resp3);
+                  Object.assign(this.genericService.loggedInUser,resp3);
+                  this.CheckRole(this.genericService.loggedInUser);
               })
             }
           }

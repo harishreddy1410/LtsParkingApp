@@ -22,8 +22,7 @@ export class GlobalGenericService{
       
     }
 
-    public isAdmin:boolean = true;
-    //public userName:string = "Aqueel Rahman";
+    public isAdmin:boolean = false;
     public ltsParkingApiDomain = "http://10.1.50.123:88/";
     public httpOptions = {
       headers: new HttpHeaders({
