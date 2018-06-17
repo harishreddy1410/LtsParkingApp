@@ -31,7 +31,7 @@
   <ion-content >
     
     <ion-list>
-        <button ion-item menu-close (click)="GotoHome()">Home</button>
+        <button  data-tap-disabled="false" item-content ion-item menu-close (click)="GotoHome()">Home</button>
         <button ion-item menu-close *ngIf="isValid" (click)="GotoSlots()">Manage Slots</button>
         <button ion-item menu-close *ngIf="isValid" (click)="GotoReports()">Reports</button>
         <!-- <button ion-item *ngIf="isValid" (click)="GotoNotifications()">Manage Notifications</button> -->

@@ -1,4 +1,136 @@
+
+/*
+   TwoWheeler = 0,
+        FourWheeler = 1
+*/
 page-home {
+
+
+    //---------Chicago office design - start -----------------//
+    
+    .nbParkingLayout{
+      position: relative;
+      text-align: center;
+      background: url(../../assets/imgs/chicago/parkingarea.png);
+      min-height: 460px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: bottom;
+      height: 100%;
+    }
+  
+    .nbParkingLayout img{
+      right: 5%;
+      position: absolute;
+      top: 29%;
+    }
+    .nbParkingLayout .parkingArea {
+      max-width: 50px;
+      border-top: 1px solid rgba(255, 255, 255, 0.6);
+      
+    }
+    .nbParkingLayout .parkingArea .slotNumber{
+      color: white;
+    }
+    .nbParkingLayout .genericDivisionLayout:first-child{
+      max-width: 50px;
+      float: left;    
+      position: absolute;
+      bottom: 66px !important;
+      left: 0;
+    }
+    .nbParkingLayout .genericDivisionLayout:first-child .slotOccupied[data-slot-type="1"]{
+       /* transform: rotate(270deg);             */
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(2) .slotOccupied[data-slot-type="1"]{
+      background-position: 15px -30px;
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(2){
+      width: 100%;
+      position: absolute;
+      bottom: 0;    
+      height: 65px;
+      display: block !important;
+      
+    }
+
+    .nbParkingLayout .genericDivisionLayout:first-child .slotOccupied[data-slot-type="1"]{
+      
+       /* transform: rotate(270deg); */
+       background-position: -20px 6px;
+
+      
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(3){
+      max-width: 50px;
+      float: right;    
+      position: absolute;
+      right: 0;
+      bottom: 66px;
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(3) .slotOccupied[data-slot-type="1"]{            
+      /* transform: rotate(90deg);            */
+      background-position: -21px 3px;
+   }
+
+   .nbParkingLayout .genericDivisionLayout:nth-child(4) .slotOccupied[data-slot-type="1"]{            
+      /* transform: rotate(90deg);            */
+      background-position: -20px 5px;
+   }
+   .nbParkingLayout .genericDivisionLayout:last-child .slotOccupied[data-slot-type="1"]{            
+      /* transform: rotate(-90deg);            */
+      background-position: -20px -28px;
+   }
+    .nbParkingLayout .genericDivisionLayout:nth-child(2) .parkingArea{
+      /* transform: rotate(180deg); */
+      max-width: 50px;
+      display: inline-block;
+      height: 35px;
+      border-right: 1px solid rgba(255, 255, 255, 0.6);
+      border-top: none;
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(4)
+    {
+      position: absolute;
+      left: 35%;
+    }
+    .nbParkingLayout .genericDivisionLayout:last-child{
+      left: 50%;
+      position: absolute;
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(4), .nbParkingLayout .genericDivisionLayout:last-child{
+      max-width: 80px;
+      float: none;
+      margin: 0 auto;
+      width: 50px;
+      bottom: 100px;
+    }
+  
+    .nbParkingLayout .genericDivisionLayout:nth-child(4) .parkingArea, .nbParkingLayout .genericDivisionLayout:last-child .parkingArea{
+      width: 50px;
+      height: 35px;
+    }
+    .nboffice{
+      position: absolute;
+      z-index: 1;
+      right: 0;
+      top: 33px;
+      right: 5%;
+      width: 25%;
+    }
+    .nbParkingLayout .slotOccupied[data-slot-type="1"]{
+      background-image: url(../../assets/imgs/chicago/parkedcar-sprite.png);
+      background-size: 60px;
+      background-repeat: no-repeat;
+      background-position: center;
+      border: none;
+    }
+    .nbParkingLayout .slotAvailable[data-slot-type="1"]{
+      background-image: url(../../assets/imgs/chicago/parkingavilable.png);
+      background-size: 20px;
+    }
+    //---------Chicago office design - end -----------------//
+
     #floating-panel {
       position: absolute;
       top: 10px;
@@ -61,14 +193,14 @@ page-home {
       color:#fff;
     }
   }
-  .slotOccupied[data-slot-type="TwoWheeler"]{
+  .slotOccupied[data-slot-type="0"]{
     background-image: url(../../assets/imgs/bike_occupied.svg);
     background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
     //padding: 0px 10px;
   }
-  .slotOccupied[data-slot-type="FourWheeler"]{
+  .slotOccupied[data-slot-type="1"]{
     background-image: url(../../assets/imgs/car_occupied.svg);
     background-size: 50px;
     background-repeat: no-repeat;
@@ -76,30 +208,30 @@ page-home {
     //padding: 0px 10px;
   }
 
-  .slotAvailable[data-slot-type="TwoWheeler"]{
-    background-image: url(../../assets/blocker/imgs/bike_available.svg);
+  .slotAvailable[data-slot-type="0"]{
+    background-image: url(../../assets/imgs/bike_available.svg);
     background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
     //padding: 0px 10px;
   }
-  .slotAvailable[data-slot-type="FourWheeler"]{
-    background-image: url(../../assets/blocker/imgs/car_available.svg);
+  .slotAvailable[data-slot-type="1"]{
+    background-image: url(../../assets/imgs/car_available.svg);
     background-size: 50px;
     background-repeat: no-repeat;
     background-position: center;
     //padding: 0px 10px;
   }
 
-  .slotUnavailable[data-slot-type="TwoWheeler"]{
-    background-image: url(../../assets/blocker/imgs/bike_unavailable.svg);
+  .slotUnavailable[data-slot-type="0"]{
+    background-image: url(../../assets/imgs/bike_unavailable.svg);
     background-size: 35px;
     background-repeat: no-repeat;
     background-position: center;
     //padding: 0px 10px;
   }
-  .slotUnavailable[data-slot-type="FourWheeler"]{
-    background-image: url(../../assets/blocker/imgs/car_unavailable.svg);
+  .slotUnavailable[data-slot-type="1"]{
+    background-image: url(../../assets/imgs/car_unavailable.svg);
     background-size: 50px;
     background-repeat: no-repeat;
     background-position: center;
@@ -155,7 +287,7 @@ page-home {
     width:40%;
   }
   .LtsParkingLayout{
-    background: url(../../assets/imgs/parkingarea.png);
+    background: url(../assets/imgs/parkingarea.png);
     min-height: 460px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -171,5 +303,130 @@ page-home {
     *[data-companymatches="false"]{
       background-color: gray;
     }
+
+    //---------Chicago office design - start -----------------//
+    
+    .nbParkingLayout{
+      position: relative;
+      text-align: center;
+      background: url(../../assets/imgs/chicago/parkingarea.png);
+      min-height: 460px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: bottom;
+      height: 100%;
+    }
+  
+    .nbParkingLayout img{
+      right: 5%;
+      position: absolute;
+      top: 29%;
+    }
+    .nbParkingLayout .parkingArea {
+      max-width: 50px;
+      border-top: 1px solid rgba(255, 255, 255, 0.6);
+      
+    }
+    .nbParkingLayout .parkingArea .slotNumber{
+      color: white;
+    }
+    .nbParkingLayout .genericDivisionLayout:first-child{
+      max-width: 50px;
+      float: left;    
+      position: absolute;
+      bottom: 66px !important;
+      left: 0;
+    }
+    .nbParkingLayout .genericDivisionLayout:first-child .slotOccupied[data-slot-type="1"]{
+       /* transform: rotate(270deg);             */
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(2) .slotOccupied[data-slot-type="1"]{
+      background-position: 15px -30px;
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(2){
+      width: 100%;
+      position: absolute;
+      bottom: 0;    
+      height: 65px;
+      display: block !important;
+      
+    }
+
+    .nbParkingLayout .genericDivisionLayout:first-child .slotOccupied[data-slot-type="1"]{
+      
+       /* transform: rotate(270deg); */
+       background-position: -20px 6px;
+
+      
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(3){
+      max-width: 50px;
+      float: right;    
+      position: absolute;
+      right: 0;
+      bottom: 66px;
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(3) .slotOccupied[data-slot-type="1"]{            
+      /* transform: rotate(90deg);            */
+      background-position: -21px 3px;
+   }
+
+   .nbParkingLayout .genericDivisionLayout:nth-child(4) .slotOccupied[data-slot-type="1"]{            
+      /* transform: rotate(90deg);            */
+      background-position: -20px 5px;
+   }
+   .nbParkingLayout .genericDivisionLayout:last-child .slotOccupied[data-slot-type="1"]{            
+      /* transform: rotate(-90deg);            */
+      background-position: -20px -28px;
+   }
+    .nbParkingLayout .genericDivisionLayout:nth-child(2) .parkingArea{
+      /* transform: rotate(180deg); */
+      max-width: 50px;
+      display: inline-block;
+      height: 35px;
+      border-right: 1px solid rgba(255, 255, 255, 0.6);
+      border-top: none;
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(4)
+    {
+      position: absolute;
+      left: 35%;
+    }
+    .nbParkingLayout .genericDivisionLayout:last-child{
+      left: 50%;
+      position: absolute;
+    }
+    .nbParkingLayout .genericDivisionLayout:nth-child(4), .nbParkingLayout .genericDivisionLayout:last-child{
+      max-width: 80px;
+      float: none;
+      margin: 0 auto;
+      width: 50px;
+      bottom: 100px;
+    }
+  
+    .nbParkingLayout .genericDivisionLayout:nth-child(4) .parkingArea, .nbParkingLayout .genericDivisionLayout:last-child .parkingArea{
+      width: 50px;
+      height: 35px;
+    }
+    .nboffice{
+      position: absolute;
+      z-index: 1;
+      right: 0;
+      top: 33px;
+      right: 5%;
+      width: 25%;
+    }
+    .nbParkingLayout .slotOccupied[data-slot-type="1"]{
+      background-image: url(../../assets/imgs/chicago/parkedcar-sprite.png);
+      background-size: 60px;
+      background-repeat: no-repeat;
+      background-position: center;
+      border: none;
+    }
+    .nbParkingLayout .slotAvailable[data-slot-type="1"]{
+      background-image: url(../../assets/imgs/chicago/parkingavilable.png);
+      background-size: 20px;
+    }
+    //---------Chicago office design - end -----------------//
 
   }

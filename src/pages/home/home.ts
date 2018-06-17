@@ -14,6 +14,7 @@ import { GlobalGenericService } from '../../services/globalgeneric.service';
 import { ParkingSlotViewModel } from '../../dto/ParkingSlotViewModel';
 import { TabsPage } from '../tabs/tabs';
 import { HomePageModule } from './home.module';
+import { isUndefined } from 'ionic-angular/util/util';
 
 //declare var google;
 
@@ -49,24 +50,30 @@ export class HomePage {
 ///Method used to update the parking slot after user actions (Occupy / release)
     PopulateParkingLayout(locationIdParam){
       this.parkingSlotApiProvider.GetLocationParkingArea(locationIdParam)
-      .subscribe(res=>{                   
+      .subscribe(res=>{           
               Object.assign(this.parkingDivisionsViewModels,res);
               this.parkingDivisionsViewModels = this.parkingDivisionsViewModels.sort()
-              this.tempLoggedInUserId = this.genericService.loggedInUser.Id;                  
-              this.currentUserCompanyId = this.genericService.loggedInUser.CompanyId;            
-        });
+              if(this.genericService.loggedInUser.Id !== undefined)
+              {
+                this.tempLoggedInUserId = this.genericService.loggedInUser.Id;                       
+                this.currentUserCompanyId = this.genericService.loggedInUser.CompanyId; 
+              }    
+              });
     }
 
 
     ionViewDidLoad(){      
 
        this.genericService.GetLoggedInUserProfile()
-        .then((resp) => {          
+        .then((resp) => {
+          if(!isUndefined(resp))          
             this.locationName = resp.Location.Name;
+            this.currentUserCompanyId = resp.CompanyId;
+            this.tempLoggedInUserId = resp.Id;
             return resp.LocationId;            
         })
         .then((resp)=>{    
-          if(resp != undefined)      
+          if(!isUndefined(resp)      )
           {            
              this.PopulateParkingLayout(resp);
           }
@@ -115,6 +122,7 @@ export class HomePage {
               if(this.auth.authenticated === true){              
                 this.userProfileApiProvider.GetUserProfile(this.auth.getEmail())
                                 .subscribe(resp2 =>{
+                                  debugger
                                         if(resp2 != null)
                                         {
                                             var userProfileResp2 = new UserProfileViewModel();

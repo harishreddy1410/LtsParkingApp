@@ -1,18 +1,16 @@
 page-login {
 
-}
-.scroll-content{
-   
+    .Body{
+        background-image: url("/assets/imgs/loginbackground.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
     
-}
-.Body{
-    background-image: url("/assets/imgs/loginBackground.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-.loginBody{
-    margin-top:38%;
-    background-color: #fff;
-    opacity: 0.9;
-    border-radius: 4px;
+    }
+    .loginBody{
+        margin-top:38%;
+        background-color: #fff;
+        opacity: 0.9;
+        border-radius: 4px;
+    }
+    
 }

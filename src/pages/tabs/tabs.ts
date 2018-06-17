@@ -38,7 +38,7 @@ export class TabsPage {
         });
       }  
   
-  GotoSlots(){
+  GotoSlots(){    
      this.rootElement["root"] = this.slotsRoot;
      this.menuCtrl.close();
   }

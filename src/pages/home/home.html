@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
     <!-- <div class="parkingSlotLeftArea">
         <div class="parkingArea" *ngFor="let parkingSlot of parkingSlots" [ngClass]="(parkingSlot.isOccupied)?'slotOccupied':''" (click)="selectSlotToOccupy($event)" [attr.data-slot-id]="(parkingSlot.Id)">
           {{parkingSlot.name}}            
@@ -38,28 +38,7 @@
         </div>
     </div>
   </div> -->
-  <div class="locationName">Location: {{(locationName) ? locationName : ""}}</div>
-      <!-- <div class="parkingSlotLeftArea">
-          <div class="divisionName">Division 1</div>
-          <div class="parkingArea" *ngFor="let parkingSlot of parkingLeftSlots" 
-          [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':'slotAvailable'"  
-          [ngClass]="(parkingSlot.IsActive)?'':'slotUnavailable'" 
-          (click)="showSlotDetailsModalPopup($event)" [attr.data-slot-id]="(parkingSlot.Id)"
-          [attr.data-slot-type]="(parkingSlot.Type)">    
-          <div class="slotNumber">{{(parkingSlot.Id)}}</div>  
-          </div>
-        </div>
-      
-        <div class="parkingSlotRightArea">
-            <div class="divisionName">Division 1</div>
-          <div class="parkingArea" *ngFor="let parkingSlot of parkingRightSlots" 
-          [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':'slotAvailable'" 
-          [ngClass]="(parkingSlot.IsActive)?'slotUnavailable':''" 
-          (click)="showSlotDetailsModalPopup($event)" [attr.data-slot-id]="(parkingSlot.Id)" 
-          [attr.data-slot-type]="(parkingSlot.Type)">
-          <div class="slotNumber">{{(parkingSlot.Id)}}</div> 
-          </div>
-        </div> -->
+  <!-- <div class="locationName">Location: {{(locationName) ? locationName : ""}}</div>
 
         <div class="LtsParkingLayout">
           <div class="genericDivisionLayout" *ngFor="let division of parkingDivisionsViewModels">
@@ -74,7 +53,33 @@
               </div>
           </div>
           
-        </div>
+        </div> -->
+      
+          <div class="locationName">Location: {{(locationName) ? locationName : ""}}</div>
+             
+         
 
+          <img class="nboffice" *ngIf="(locationName)?locationName.indexOf('Northbrook') > -1 : false" src="../../assets/imgs/chicago/office-building.png">
+                <!-- <div class="nbParkingLayout"> -->
+                    <div [ngClass]="(parkingDivisionsViewModels != undefined && parkingDivisionsViewModels.length > 0) ? parkingDivisionsViewModels[0].LocationDesignAttribute : 'LtsParkingLayout'">
+                  <div class="genericDivisionLayout" *ngFor="let division of parkingDivisionsViewModels">
+                      <div class="divisionName">{{(division.Name)}}</div>
+                      
+                      <div class="parkingArea" *ngFor="let parkingSlot of division.ParkingSlots" 
+                          [ngClass]="(parkingSlot.IsOccupied)?'slotOccupied':'slotAvailable'"                   
+                          [ngClass]="(parkingSlot.IsActive)?'slotUnavailable':''" 
+                          (click)="showSlotDetailsModalPopup($event)" [attr.data-slotid]="(parkingSlot.Id)" 
+                          [attr.data-companymatches]="(parkingSlot.CompanyId == currentUserCompanyId)"                  
+                          [attr.data-slot-type]="(parkingSlot.Type)">
+                          <div class="slotNumber">{{(parkingSlot.Id)}}</div>     
+                      </div>
+                      
+                  </div>
+                  
+                </div>
+        
+                
+        
+        
         
 </ion-content>
