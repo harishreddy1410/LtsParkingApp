@@ -46,9 +46,9 @@ export class HomePage {
                 public modalCtrl : ModalController,
               ) {
   
-    }
-///Method used to update the parking slot after user actions (Occupy / release)
-    PopulateParkingLayout(locationIdParam){
+    }    
+    ///Method used to update the parking slot after user actions (Occupy / release)
+    PopulateParkingLayout(locationIdParam){      
       this.parkingSlotApiProvider.GetLocationParkingArea(locationIdParam)
       .subscribe(res=>{           
               Object.assign(this.parkingDivisionsViewModels,res);
@@ -58,7 +58,15 @@ export class HomePage {
                 this.tempLoggedInUserId = this.genericService.loggedInUser.Id;                       
                 this.currentUserCompanyId = this.genericService.loggedInUser.CompanyId; 
               }    
-              });
+              },
+              error => {
+                console.log(error);
+                //this.loaderCommon.dismiss();
+              },
+              () =>{
+                //on complete 
+              }
+            );
     }
 
 
@@ -192,7 +200,7 @@ export class HomePage {
         <div class="slotDetailHeading"> In Time</div>: {{(slotDetail) ? slotDetail.InTime : ''   }}
       </ion-item>
       <ion-item *ngIf="(slotDetail) ? slotDetail.IsOccupied === true : false">
-      <div class="slotDetailHeading"> Expires In</div>: <span #mins>{{minsLeft}}</span>:<span #secs>{{secsLeft}}</span>
+      <div class="slotDetailHeading"> Expires In</div>: <span>{{hrsLeft}}</span> <span #mins>{{minsLeft}}</span>:<span #secs>{{secsLeft}}</span>
       </ion-item>
       <ion-item *ngIf="(slotDetail) ? slotDetail.IsOccupied === false : true">
       <div class="slotDetailHeading"> Expires In</div>: --:--
@@ -243,16 +251,25 @@ export class ModalContentPage {
   }
 
   calculateExpirationTime(){
-    let outTime = this.slotDetail.OutTime;
+    
+    let outTime =this.slotDetail.OutTime;
     let hrs,mins,secs;
     this.timer = setInterval(()=> {      
       // Find the distance between now an the count down date
-      var distance = new Date().getTime() - outTime.getTime();
-      
+      var distance = outTime - new Date().getTime();
       // Time calculations for minutes and seconds 
       this.hrsLeft = Math.floor((distance/60/1000/60));
+      if(this.hrsLeft < 0){
+        this.hrsLeft = 0;
+      }
       this.minsLeft = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      if(this.minsLeft < 0){
+        this.minsLeft = 0;
+      }
       this.secsLeft = Math.floor((distance % (1000 * 60)) / 1000);
+      if(this.secsLeft < 0){
+        this.secsLeft = 0;
+      }
       //this.minsElement.value = mins;
       //this.secsElement.value = secs;
   }, 1000);
@@ -276,8 +293,11 @@ export class ModalContentPage {
                                   CurrentUserId : this.params.get('currentUserId'),
                                   SlotOccupiedByUserId : tempParkingSlot.SlotOccupiedByUserId
                               };
-            this.calculateExpirationTime();
-        })
+        },
+      null,
+    () => {      
+      this.calculateExpirationTime();
+    })
 
   }
 
@@ -390,22 +410,6 @@ export class ModalContentPage {
       message: 'Oops! Your distance from parking space is beyond the limit.',
       buttons: ['Close']
     });
-
-    // this.geolocation.getCurrentPosition().then((position) => { 
-    //   userLatitude = position.coords.latitude;
-    //   userLongitude = position.coords.longitude; 
-    //   console.log(userLatitude + "," + userLongitude);
-    //   let distance = this.genericService.getDistanceBetweenCoordinates(userLatitude,userLongitude);
-    //   console.log(distance);
-    //   if(event.target.className.indexOf("slotOccupied") < 0 && distance < 1){
-    //     loader.dismiss();
-    //     confirm.present();
-    //   }
-    //   else{
-    //     loader.dismiss();
-    //     alert.present();
-
-
     
   }
 }
